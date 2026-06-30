@@ -1,0 +1,21 @@
+# Ignore heavy deep learning model weights
+checkpoints/
+models/
+*.pt
+*.pth
+*.ckpt
+
+# Ignore heavy raw or processed datasets
+*.csv
+data/
+
+# Ignore massive training execution logs
+*.log
+
+# Ignore IDE settings and python cache
+.cursor/
+.vscode/
+.idea/
+__pycache__/
+.cache/
+.ipynb_checkpoints/
