@@ -96,6 +96,9 @@ class TrainConfig:
     use_amp: bool = True  # Automatic Mixed Precision for VRAM efficiency
     max_grad_norm: float = 1.0  # Crucial for deep attention networks
 
+    # Class weighting to address ACK recall collapse (ACK has near-zero recall in current results)
+    use_class_weights: bool = True
+
 @dataclass
 class ModelConfig:
     """Architectural dimensions and pre-trained backbone pointers."""

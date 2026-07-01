@@ -132,7 +132,7 @@ class StatisticalAnalyzer:
             ("Cross-Attn T→V", "Text-Only"),
         ]
         
-        key_metrics = ["AUROC", "F1 (Macro)", "Linear_CKA", "CFR", "Mean_Delta_P"]
+        key_metrics = ["AUROC", "F1 (Macro)", "Linear_CKA", "CFR", "ECE"]
         
         # Collect all p-values for Holm-Bonferroni correction
         all_p_values = []
@@ -184,7 +184,7 @@ class StatisticalAnalyzer:
         
         for arch in architectures:
             for baseline in ["Image-Only", "Text-Only"]:
-                for metric in key_metrics:
+                for metric in ["AUROC", "F1 (Macro)", "Linear_CKA", "CFR", "ECE"]:
                     arch_vals = self.results[arch].get(metric)
                     baseline_vals = self.results[baseline].get(metric)
                     if arch_vals and baseline_vals and len(arch_vals) >= 2 and len(baseline_vals) >= 2:

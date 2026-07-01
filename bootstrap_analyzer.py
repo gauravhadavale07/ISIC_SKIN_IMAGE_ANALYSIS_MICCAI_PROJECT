@@ -12,6 +12,12 @@ class BootstrapAnalyzer:
     """
     Computes bootstrap confidence intervals for metrics on the fixed OOD test set.
     Resamples the 2,298 PAD-UFES-20 test points with replacement to estimate uncertainty.
+    
+    DECISION RULE FOR CONFLICTING RESULTS:
+    - Primary: Paired t-test p-values (from statistical_analyzer.py)
+    - Supplementary: Bootstrap CIs
+    - If t-test says not significant but bootstrap CI doesn't include zero: report t-test result as primary
+    - Rationale: Paired t-test is the standard for MICCAI; bootstrap provides uncertainty bounds
     """
     def __init__(self, progress_path: str = "./results/experiment_progress_v3.json", n_bootstrap: int = 1000):
         self.progress_path = progress_path

@@ -154,8 +154,11 @@ class CrossAttentionT2VClassifier(nn.Module):
         
         # Project to vision dimension for CKA compatibility
         self.to_vision_dim = nn.Linear(cfg.model.text_dim, cfg.model.vision_dim)
+        
+        # Store attention weights for visualization
+        self.last_attention_weights = None
     
-    def forward(self, image, input_ids, attention_mask):
+    def forward(self, image, input_ids, attention_mask, return_attention=False):
         # Vision pathway
         vision_features = self.vision_encoder(image)  # (B, 768) -> reshape to (B, 1, 768)
         vision_seq = vision_features.unsqueeze(1)  # (B, 1, 768)
@@ -165,12 +168,17 @@ class CrossAttentionT2VClassifier(nn.Module):
         text_seq = text_outputs.last_hidden_state  # (B, seq_len, 768)
         
         # Cross-attention: Text (query) attends to Vision (key/value)
+        # Save attention weights for visualization before pooling
         attn_output, attn_weights = self.cross_attn(
             query=text_seq,
             key=vision_seq,
             value=vision_seq,
-            need_weights=False
+            need_weights=True,  # Always compute for T→V to enable visualization
+            average_attn_weights=True  # Average across heads
         )
+        
+        # Store attention weights for later extraction
+        self.last_attention_weights = attn_weights  # (B, seq_len, 1) - text tokens attending to vision
         
         # Pool over sequence (mean pooling)
         fused_repr = attn_output.mean(dim=1)  # (B, 768)
@@ -181,4 +189,6 @@ class CrossAttentionT2VClassifier(nn.Module):
         # Project to vision dimension for CKA compatibility
         fused_for_cka = self.to_vision_dim(fused_repr)  # (B, 768)
         
+        if return_attention:
+            return logits, fused_for_cka, vision_features, attn_weights
         return logits, fused_for_cka, vision_features
