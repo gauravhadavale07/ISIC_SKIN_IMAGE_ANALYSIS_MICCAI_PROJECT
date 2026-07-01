@@ -37,7 +37,9 @@ from dataset import MultimodalDermatologyDataset  # noqa: E402
 from transforms import get_eval_transforms  # noqa: E402
 from models.late_fusion import LateFusionClassifier  # noqa: E402
 from models.gmu import GMUClassifier  # noqa: E402
-from models.cross_attention import CrossAttentionClassifier  # noqa: E402
+from models.cross_attention import CrossAttentionV2TClassifier, CrossAttentionT2VClassifier  # noqa: E402
+from models.image_only import ImageOnlyClassifier  # noqa: E402
+from models.text_only import TextOnlyClassifier  # noqa: E402
 from counterfactual import CounterfactualAuditor  # noqa: E402
 from viz_data import aggregate_training_by_model, parse_training_logs  # noqa: E402
 from viz_style import CLASS_NAMES, DATA_DIR, MODELS  # noqa: E402
@@ -46,7 +48,10 @@ REPRESENTATIVE_SEED = 42
 ARCHITECTURES = {
     "Late Fusion": LateFusionClassifier,
     "GMU Baseline": GMUClassifier,
-    "Cross-Attention": CrossAttentionClassifier,
+    "Cross-Attn V→T": CrossAttentionV2TClassifier,
+    "Cross-Attn T→V": CrossAttentionT2VClassifier,
+    "Image-Only": ImageOnlyClassifier,
+    "Text-Only": TextOnlyClassifier,
 }
 
 
@@ -54,7 +59,10 @@ def load_model(model_cls, seed: int, device):
     folder_map = {
         "LateFusionClassifier": "Late_Fusion",
         "GMUClassifier": "GMU_Baseline",
-        "CrossAttentionClassifier": "Cross-Attention",
+        "CrossAttentionV2TClassifier": "Cross_Attn_VtoT",
+        "CrossAttentionT2VClassifier": "Cross_Attn_TtoV",
+        "ImageOnlyClassifier": "Image_Only",
+        "TextOnlyClassifier": "Text_Only",
     }
     folder = folder_map[model_cls.__name__]
     ckpt_path = PROJECT_ROOT / "checkpoints" / f"{folder}_seed_{seed}" / "best_model.pth"
@@ -283,12 +291,12 @@ def main():
         }
         calibration[model_name] = compute_calibration(res["y_true"], res["y_prob"])
 
-        if model_name == "Cross-Attention":
+        if "Cross-Attn" in model_name:
             attn = export_attention_maps(model, test_loader, device)
             if attn is not None:
                 np.savez_compressed(DATA_DIR / "attention_maps.npz", weights=attn)
 
-        if model_name == "Cross-Attention":
+        if "Cross-Attn" in model_name:
             cases = export_counterfactual_cases(
                 model, test_loader, tokenizer, device, test_df, n_cases=6
             )

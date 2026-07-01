@@ -138,7 +138,8 @@ class AuditConfig:
 @dataclass
 class ExperimentConfig:
     """Master configuration object wrapping all sub-configs."""
-    seeds: List[int] = field(default_factory=lambda: [42, 123, 999])
+    protocol_version: str = "v3_nobiopsy_6seeds"
+    seeds: List[int] = field(default_factory=lambda: [42, 123, 456, 789, 999, 1337])
 
     # Instantiate sub-configs
     paths: PathConfig = field(default_factory=PathConfig)

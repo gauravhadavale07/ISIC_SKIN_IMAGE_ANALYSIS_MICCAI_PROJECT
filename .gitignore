@@ -1,6 +1,5 @@
 # Ignore heavy deep learning model weights
 checkpoints/
-models/
 *.pt
 *.pth
 *.ckpt

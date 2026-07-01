@@ -1,0 +1,1 @@
+"""Multimodal dermatology model architectures."""

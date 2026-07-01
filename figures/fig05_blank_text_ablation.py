@@ -34,7 +34,7 @@ def main():
     ax.set_xticklabels([MODEL_SHORT[m] for m in MODELS])
     ax.set_ylabel("Accuracy (%)")
     ax.set_title(
-        "Blank-Text Ablation Audit (PAD-UFES-20, Mean ± Std)",
+        "Blank-Text Ablation Audit (PAD-UFES-20, Mean ± Std, 6 Seeds)",
         fontsize=14, fontweight="bold",
     )
     ax.legend(frameon=True, edgecolor="#CCCCCC")

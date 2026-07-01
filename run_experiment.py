@@ -17,8 +17,10 @@ from statistical_analyzer import StatisticalAnalyzer  # <--- FIXED IMPORT
 
 # Import Architectures
 from models.late_fusion import LateFusionClassifier
-from models.cross_attention import CrossAttentionClassifier
+from models.cross_attention import CrossAttentionClassifier, CrossAttentionV2TClassifier, CrossAttentionT2VClassifier
 from models.gmu import GMUClassifier
+from models.image_only import ImageOnlyClassifier
+from models.text_only import TextOnlyClassifier
 
 
 def load_checkpoint(model, checkpoint_path, device):
@@ -68,7 +70,10 @@ def main():
     architectures = {
         "Late Fusion": LateFusionClassifier,
         "GMU Baseline": GMUClassifier,
-        "Cross-Attention": CrossAttentionClassifier
+        "Cross-Attn V→T": CrossAttentionV2TClassifier,
+        "Cross-Attn T→V": CrossAttentionT2VClassifier,
+        "Image-Only": ImageOnlyClassifier,
+        "Text-Only": TextOnlyClassifier
     }
 
     # =========================================================================
