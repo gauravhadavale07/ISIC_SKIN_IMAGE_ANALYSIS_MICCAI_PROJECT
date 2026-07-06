@@ -1,0 +1,63 @@
+digraph G {
+    fontname="Helvetica,Arial,sans-serif"
+    node [fontname="Helvetica,Arial,sans-serif", shape=box, style="rounded,filled", fillcolor="#f9f9f9", color="#333333", penwidth=2]
+    edge [fontname="Helvetica,Arial,sans-serif"]
+
+    subgraph cluster_input {
+        label = "1. Input Modalities";
+        style=filled;
+        color="#e1f5fe";
+        node [fillcolor=white];
+        Img [label="Skin Lesion Image"];
+        Txt [label="Clinical History Text"];
+    }
+
+    subgraph cluster_probes {
+        label = "2. Mechanistic Probes (Text Pathway)";
+        style=filled;
+        color="#fff3e0";
+        node [fillcolor=white];
+        P1 [label="A. Real Text Baseline\n(Standard Inference)"];
+        P2 [label="B. Blank-Text Ablation\n(Empty String)"];
+        P3 [label="C. Neutral Text Probe\n('No history available')"];
+        P4 [label="D. Counterfactual Override\n(Contradictory semantic injection)"];
+        P5 [label="E. Metadata-Shuffle Control\n(Lexical distribution preserved)"];
+    }
+
+    subgraph cluster_model {
+        label = "3. Multimodal Architecture";
+        style=filled;
+        color="#e8f5e9";
+        node [fillcolor=white];
+        Fusion [label="Cross-Modal Fusion Layer\n(Late / GMU / Cross-Attention)"];
+    }
+
+    subgraph cluster_metrics {
+        label = "4. Integrity Verification Metrics";
+        style=filled;
+        color="#f3e5f5";
+        node [fillcolor=white];
+        M1 [label="Accuracy Drop\n(P1 vs P3)"];
+        M2 [label="Counterfactual Flip Rate (CFR)\n(P1 vs P4)"];
+        M3 [label="Linear CKA\n(Visual vs Fused Space)"];
+        M4 [label="Lexical Dependency Drop\n(P1 vs P5)"];
+    }
+
+    Img -> Fusion [weight=10];
+    Txt -> P1;
+    Txt -> P2;
+    Txt -> P3;
+    Txt -> P4;
+    Txt -> P5;
+    
+    P1 -> Fusion;
+    P2 -> Fusion;
+    P3 -> Fusion;
+    P4 -> Fusion;
+    P5 -> Fusion;
+
+    Fusion -> M1;
+    Fusion -> M2;
+    Fusion -> M3;
+    Fusion -> M4;
+}

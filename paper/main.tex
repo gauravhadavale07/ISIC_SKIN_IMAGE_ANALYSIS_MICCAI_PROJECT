@@ -53,7 +53,14 @@ Researchers frequently utilize the Counterfactual Flip Rate (CFR) and Centered K
 
 \section{The Mechanistic Auditing Framework}
 
-To determine if multimodal architectures genuinely extract diagnostic clinical priors from text, we developed a three-stage mechanistic audit. We evaluated four architectures: an Image-Only baseline (ViT-Base) \cite{dosovitskiy2020image}, Late Fusion, GMU \cite{arevalo2017gated}, and a bidirectional Cross-Attention Transformer (T$\rightarrow$V and V$\rightarrow$T) \cite{vaswani2017attention}.
+To determine if multimodal architectures genuinely extract diagnostic clinical priors from text, we developed a three-stage mechanistic audit. We evaluated four architectures: an Image-Only baseline (ViT-Base) \cite{dosovitskiy2020image}, Late Fusion, GMU \cite{arevalo2017gated}, and a bidirectional Cross-Attention Transformer (T$\rightarrow$V and V$\rightarrow$T) \cite{vaswani2017attention}. The complete auditing pipeline is illustrated in Figure \ref{fig:pipeline}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{figures/pipeline_diagram.png}
+    \caption{The Mechanistic Auditing Pipeline. We isolate the text pathway by subjecting it to four distinct probes (Blank, Neutral, Counterfactual, and Metadata-Shuffle) to quantify genuine semantic grounding versus structural artifact exploitation.}
+    \label{fig:pipeline}
+\end{figure}
 
 \subsection{Tokenizer Artifacts and Neutral Ablation}
 The standard practice for isolating the visual pathway in a multimodal model is to input an empty string (``''). However, we discovered this induces a tokenizer collapse. When an empty string is tokenized by ClinicalBERT \cite{alsentzer2019publicly}, it yields only a [CLS] and [SEP] token, followed by [PAD] tokens. In Cross-Attention layers, attending to [PAD] tokens causes catastrophic numerical instability, crashing model accuracy to 0\%. We solved this by instituting a ``Neutral Text'' probe (e.g., ``No clinical history available''), which preserves token sequence stability without injecting semantic priors.
