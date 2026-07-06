@@ -30,6 +30,15 @@ class CounterfactualAuditor:
             return_tensors="pt"
         )
 
+        # Pre-tokenize the neutral string (non-empty baseline)
+        self.neutral_tokens = self.tokenizer(
+            cfg.audit.neutral_string,
+            padding="max_length",
+            truncation=True,
+            max_length=cfg.data.max_text_len,
+            return_tensors="pt"
+        )
+
         # Pre-tokenize the semantic overrides
         self.benign_cf = self.tokenizer(
             cfg.audit.benign_override,
@@ -137,6 +146,8 @@ class CounterfactualAuditor:
         total          = 0
         real_correct   = 0
         blank_correct  = 0
+        neutral_correct = 0
+        cf_correct     = 0
         flipped_count  = 0
         delta_p_sum    = 0.0
 
@@ -145,6 +156,10 @@ class CounterfactualAuditor:
         # Pre-move blank tensors to device once — avoids repetitive CPU→GPU transfers
         dummy_blank_ids  = self.blank_tokens["input_ids"].to(self.device)
         dummy_blank_mask = self.blank_tokens["attention_mask"].to(self.device)
+        
+        # Pre-move neutral tensors to device once
+        dummy_neutral_ids  = self.neutral_tokens["input_ids"].to(self.device)
+        dummy_neutral_mask = self.neutral_tokens["attention_mask"].to(self.device)
 
         for batch in pbar:
             imgs      = batch["image"].to(self.device, non_blocking=True)
@@ -172,6 +187,15 @@ class CounterfactualAuditor:
                 _, blank_preds     = torch.max(blank_logits, 1)
                 blank_correct     += (blank_preds == labels).sum().item()
 
+            # --- PROBE 2.5: NEUTRAL TEXT PROBE ---
+            n_ids  = dummy_neutral_ids.expand(B, -1).contiguous()
+            n_mask = dummy_neutral_mask.expand(B, -1).contiguous()
+
+            with autocast(device_type=self.device.type, enabled=cfg.train.use_amp and self.device.type == "cuda"):
+                neutral_logits, _, _ = self.model(imgs, n_ids, n_mask)
+                _, neutral_preds     = torch.max(neutral_logits, 1)
+                neutral_correct     += (neutral_preds == labels).sum().item()
+
             # --- PROBE 3: COUNTERFACTUAL OVERRIDES ---
             cf_ids, cf_mask = self._get_override_tensors(labels)
 
@@ -179,6 +203,7 @@ class CounterfactualAuditor:
                 cf_logits, _, _ = self.model(imgs, cf_ids, cf_mask)
                 cf_probs        = torch.softmax(cf_logits.float(), dim=1)
                 _, cf_preds     = torch.max(cf_logits, 1)
+                cf_correct     += (cf_preds == labels).sum().item()
 
             # CFR: proportion of samples where the prediction flipped
             flipped        = (real_preds != cf_preds)
@@ -195,11 +220,13 @@ class CounterfactualAuditor:
         # Compile final metrics
         # All percentage values are in percentage points for consistent reporting
         results = {
-            "Real_Accuracy":       100. * real_correct / total,
-            "Blank_Accuracy":      100. * blank_correct / total,
-            "Blank_Accuracy_Drop": 100. * (real_correct - blank_correct) / total,  # structured for orchestrator
-            "CFR":                 100. * flipped_count / total,
-            "Mean_Delta_P":        100. * delta_p_sum / total      # percentage points of probability shift
+            "Real_Accuracy":           100. * real_correct / total,
+            "Blank_Accuracy":          100. * blank_correct / total,
+            "Neutral_Accuracy":        100. * neutral_correct / total,
+            "Counterfactual_Accuracy": 100. * cf_correct / total,
+            "Blank_Accuracy_Drop":     100. * (real_correct - blank_correct) / total,  # structured for orchestrator
+            "CFR":                     100. * flipped_count / total,
+            "Mean_Delta_P":            100. * delta_p_sum / total      # percentage points of probability shift
         }
 
         return results

@@ -6,7 +6,6 @@ import torch.nn as nn
 from torch.amp import autocast, GradScaler
 from tqdm import tqdm
 from config import cfg
-from sklearn.utils.class_weight import compute_class_weight
 
 def set_seed(seed: int = 42):
     """
@@ -36,12 +35,6 @@ class MultimodalTrainer:
         self.device = device
         self.run_name = run_name
         
-        # Compute class weights if enabled to address ACK recall collapse
-        if cfg.train.use_class_weights:
-            self._compute_class_weights()
-        else:
-            self.class_weights = None
-        
         # Output paths
         self.save_dir = os.path.join(cfg.paths.checkpoint_dir, run_name)
         os.makedirs(self.save_dir, exist_ok=True)
@@ -52,23 +45,6 @@ class MultimodalTrainer:
         # State tracking
         self.best_val_loss = float('inf')
         self.patience_counter = 0
-
-    def _compute_class_weights(self):
-        """Compute inverse frequency class weights from training data."""
-        # Collect all labels from training loader
-        all_labels = []
-        for batch in self.train_loader:
-            all_labels.extend(batch["label"].cpu().numpy())
-        
-        # Compute class weights (inverse frequency)
-        class_weights = compute_class_weight(
-            class_weight='balanced',
-            classes=np.arange(cfg.model.num_classes),
-            y=np.array(all_labels)
-        )
-        
-        self.class_weights = torch.tensor(class_weights, dtype=torch.float32).to(self.device)
-        print(f"📊 Class weights computed: {self.class_weights.cpu().numpy()}")
 
     def _train_epoch(self, epoch: int):
         self.model.train()
@@ -91,12 +67,7 @@ class MultimodalTrainer:
             with autocast(device_type=self.device.type, enabled=cfg.train.use_amp and self.device.type == "cuda"):
                 # Our models return (logits, fused_representation, vis_cls)
                 logits, _, _ = self.model(imgs, input_ids, attn_mask)
-                
-                # Apply class weights if enabled
-                if self.class_weights is not None:
-                    loss = nn.functional.cross_entropy(logits, labels, weight=self.class_weights)
-                else:
-                    loss = self.criterion(logits, labels)
+                loss = self.criterion(logits, labels)
             
             # Backward pass with gradient scaling
             self.scaler.scale(loss).backward()
@@ -106,7 +77,6 @@ class MultimodalTrainer:
             nn.utils.clip_grad_norm_(self.model.parameters(), cfg.train.max_grad_norm)
             
             # Optimizer & Scheduler steps
-            # CRITICAL: scheduler.step() must come AFTER optimizer.step() for correct LR schedule
             self.scaler.step(self.optimizer)
             self.scaler.update()
             if self.scheduler is not None:

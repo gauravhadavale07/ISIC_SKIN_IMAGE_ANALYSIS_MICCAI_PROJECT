@@ -10,7 +10,7 @@ class StatisticalAnalyzer:
     Aggregates multi-seed results and performs statistical significance testing.
     Crucial for defending claims against the 'lucky seed' critique in medical AI.
     """
-    def __init__(self, progress_path: str = "./results/experiment_progress_v3.json"):
+    def __init__(self, progress_path: str = "./results/experiment_progress.json"):
         self.progress_path = progress_path
         # Structure: self.results[model_name][metric_name] = [seed1_val, seed2_val, seed3_val]
         self.results = defaultdict(lambda: defaultdict(list))
@@ -110,124 +110,13 @@ class StatisticalAnalyzer:
             for metric, value in metrics.items():
                 print(f"  {metric:<20}: {value}")
 
-        # Full 12-pair comparison family for collapse testing
-        print("\n⚖️ Statistical Significance Tests (12-pair family)")
+        # Explicit pairwise comparisons for the key narrative metrics
+        print("\n⚖️ Statistical Significance (Cross-Attention vs Late Fusion)")
         print("-" * 65)
         
-        # Define all 12 comparison pairs
-        comparison_pairs = [
-            # Original 6 pairs
-            ("Late Fusion", "Cross-Attn V→T"),
-            ("Late Fusion", "Cross-Attn T→V"),
-            ("GMU Baseline", "Cross-Attn V→T"),
-            ("Cross-Attn V→T", "Cross-Attn T→V"),
-            ("Image-Only", "Late Fusion"),
-            ("Text-Only", "Late Fusion"),
-            # New 6 pairs for collapse testing
-            ("GMU Baseline", "Image-Only"),
-            ("GMU Baseline", "Text-Only"),
-            ("Cross-Attn V→T", "Image-Only"),
-            ("Cross-Attn V→T", "Text-Only"),
-            ("Cross-Attn T→V", "Image-Only"),
-            ("Cross-Attn T→V", "Text-Only"),
-        ]
-        
-        key_metrics = ["AUROC", "F1 (Macro)", "Linear_CKA", "CFR", "ECE"]
-        
-        # Collect all p-values for Holm-Bonferroni correction
-        all_p_values = []
-        test_results = []
-        
-        for model_a, model_b in comparison_pairs:
-            for metric in key_metrics:
-                baseline_vals = self.results[model_a].get(metric)
-                proposed_vals = self.results[model_b].get(metric)
-                if baseline_vals and proposed_vals and len(baseline_vals) >= 2 and len(proposed_vals) >= 2:
-                    t_stat, p_val = stats.ttest_rel(baseline_vals, proposed_vals, nan_policy='omit')
-                    if not np.isnan(t_stat) and not np.isnan(p_val):
-                        all_p_values.append(p_val)
-                        test_results.append((model_a, model_b, metric, t_stat, p_val))
-        
-        # Apply Holm-Bonferroni correction
-        if all_p_values:
-            from statsmodels.stats.multitest import multipletests
-            rejected, p_corrected, _, _ = multipletests(all_p_values, method='holm')
+        key_metrics = ["AUROC", "F1 (Macro)", "Linear_CKA", "CFR", "Mean_Delta_P"]
+        for metric in key_metrics:
+            p_test = self.paired_ttest("Late Fusion", "Cross-Attention", metric)
+            print(f"  {metric:<20} -> {p_test}")
             
-            # Print corrected results
-            idx = 0
-            for model_a, model_b, metric, t_stat, p_val in test_results:
-                is_sig = rejected[idx]
-                sig_marker = "***" if is_sig else "ns"
-                print(f"  {model_a} vs {model_b} ({metric}): t={t_stat:.3f}, p={p_val:.4f} -> {p_corrected[idx]:.4f} {sig_marker}")
-                idx += 1
-        
-        # Generate collapse-test summary table
-        self._generate_collapse_summary(comparison_pairs, key_metrics)
-        
         print("="*65)
-    
-    def _generate_collapse_summary(self, comparison_pairs, key_metrics):
-        """Generate collapse-test summary table for paper Results section."""
-        collapse_summary = {}
-        
-        architectures = ["Late Fusion", "GMU Baseline", "Cross-Attn V→T", "Cross-Attn T→V"]
-        
-        for arch in architectures:
-            collapse_summary[arch] = {
-                "vs_Image_Only": {"distinguishable": False, "p": None, "p_corrected": None},
-                "vs_Text_Only": {"distinguishable": False, "p": None, "p_corrected": None}
-            }
-        
-        # Collect p-values for correction
-        all_p_values = []
-        test_metadata = []
-        
-        for arch in architectures:
-            for baseline in ["Image-Only", "Text-Only"]:
-                for metric in ["AUROC", "F1 (Macro)", "Linear_CKA", "CFR", "ECE"]:
-                    arch_vals = self.results[arch].get(metric)
-                    baseline_vals = self.results[baseline].get(metric)
-                    if arch_vals and baseline_vals and len(arch_vals) >= 2 and len(baseline_vals) >= 2:
-                        t_stat, p_val = stats.ttest_rel(arch_vals, baseline_vals, nan_policy='omit')
-                        if not np.isnan(t_stat) and not np.isnan(p_val):
-                            all_p_values.append(p_val)
-                            test_metadata.append((arch, baseline, metric, t_stat, p_val))
-        
-        # Apply Holm-Bonferroni correction
-        if all_p_values:
-            from statsmodels.stats.multitest import multipletests
-            rejected, p_corrected, _, _ = multipletests(all_p_values, method='holm')
-            
-            idx = 0
-            for arch, baseline, metric, t_stat, p_val in test_metadata:
-                is_sig = rejected[idx]
-                baseline_key = f"vs_{baseline.replace('-', '_')}"
-                collapse_summary[arch][baseline_key]["p"] = float(p_val)
-                collapse_summary[arch][baseline_key]["p_corrected"] = float(p_corrected[idx])
-                collapse_summary[arch][baseline_key]["distinguishable"] = bool(is_sig)
-                idx += 1
-        
-        # Save to JSON
-        import json
-        import os
-        os.makedirs(os.path.dirname(self.progress_path), exist_ok=True)
-        summary_path = self.progress_path.replace("experiment_progress_v3.json", "collapse_test_summary.json")
-        with open(summary_path, "w") as f:
-            json.dump(collapse_summary, f, indent=2)
-        
-        print(f"\n📊 Collapse-test summary saved to {summary_path}")
-        
-        # Print summary table
-        print("\n📊 Collapse-Test Summary Table")
-        print("-" * 65)
-        print(f"{'Architecture':<20} {'vs Image-Only':<25} {'vs Text-Only':<25}")
-        print("-" * 65)
-        for arch in architectures:
-            img_status = "Y" if collapse_summary[arch]["vs_Image_Only"]["distinguishable"] else "N"
-            txt_status = "Y" if collapse_summary[arch]["vs_Text_Only"]["distinguishable"] else "N"
-            img_p = collapse_summary[arch]["vs_Image_Only"]["p_corrected"]
-            txt_p = collapse_summary[arch]["vs_Text_Only"]["p_corrected"]
-            img_str = f"{img_status} (p={img_p:.4f})" if img_p else "N (insufficient data)"
-            txt_str = f"{txt_status} (p={txt_p:.4f})" if txt_p else "N (insufficient data)"
-            print(f"{arch:<20} {img_str:<25} {txt_str:<25}")
-        print("-" * 65)

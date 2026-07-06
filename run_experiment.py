@@ -19,8 +19,6 @@ from statistical_analyzer import StatisticalAnalyzer  # <--- FIXED IMPORT
 from models.late_fusion import LateFusionClassifier
 from models.cross_attention import CrossAttentionClassifier, CrossAttentionV2TClassifier, CrossAttentionT2VClassifier
 from models.gmu import GMUClassifier
-from models.image_only import ImageOnlyClassifier
-from models.text_only import TextOnlyClassifier
 
 
 def load_checkpoint(model, checkpoint_path, device):
@@ -70,10 +68,8 @@ def main():
     architectures = {
         "Late Fusion": LateFusionClassifier,
         "GMU Baseline": GMUClassifier,
-        "Cross-Attn V→T": CrossAttentionV2TClassifier,
-        "Cross-Attn T→V": CrossAttentionT2VClassifier,
-        "Image-Only": ImageOnlyClassifier,
-        "Text-Only": TextOnlyClassifier
+        "Cross-Attention V→T": CrossAttentionV2TClassifier,
+        "Cross-Attention T→V": CrossAttentionT2VClassifier
     }
 
     # =========================================================================
@@ -237,9 +233,18 @@ def main():
             cf_auditor.print_report(cf_results)
             cka_auditor.print_report(cka_results, model_name=model_name)
 
+        # Print intermediate results after each seed
+        print(f"\n{'='*65}")
+        print(f"📊 INTERMEDIATE RESULTS AFTER SEED {seed}")
+        print(f"{'='*65}")
+        stats_analyzer.print_report()
+
     # =========================================================================
     # THE FINAL STATISTICAL REPORT
     # =========================================================================
+    print(f"\n{'='*65}")
+    print(f"🏁 FINAL MULTI-SEED STATISTICAL REPORT (ALL SEEDS)")
+    print(f"{'='*65}")
     stats_analyzer.print_report()
 
 if __name__ == "__main__":

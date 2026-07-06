@@ -159,9 +159,10 @@ class CrossAttentionT2VClassifier(nn.Module):
         self.last_attention_weights = None
     
     def forward(self, image, input_ids, attention_mask, return_attention=False):
-        # Vision pathway
-        vision_features = self.vision_encoder(image)  # (B, 768) -> reshape to (B, 1, 768)
-        vision_seq = vision_features.unsqueeze(1)  # (B, 1, 768)
+        # Vision pathway: get patch tokens instead of pooled representation
+        vision_seq = self.vision_encoder.forward_features(image)  # (B, 197, 768)
+        # Extract CLS token as global visual features for return_attention signature
+        vision_features = vision_seq[:, 0, :]  # (B, 768)
         
         # Text pathway
         text_outputs = self.text_encoder(input_ids=input_ids, attention_mask=attention_mask)
@@ -178,7 +179,7 @@ class CrossAttentionT2VClassifier(nn.Module):
         )
         
         # Store attention weights for later extraction
-        self.last_attention_weights = attn_weights  # (B, seq_len, 1) - text tokens attending to vision
+        self.last_attention_weights = attn_weights  # (B, seq_len, 197) - text tokens attending to 197 vision patches
         
         # Pool over sequence (mean pooling)
         fused_repr = attn_output.mean(dim=1)  # (B, 768)

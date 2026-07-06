@@ -96,9 +96,6 @@ class TrainConfig:
     use_amp: bool = True  # Automatic Mixed Precision for VRAM efficiency
     max_grad_norm: float = 1.0  # Crucial for deep attention networks
 
-    # Class weighting to address ACK recall collapse (ACK has near-zero recall in current results)
-    use_class_weights: bool = True
-
 @dataclass
 class ModelConfig:
     """Architectural dimensions and pre-trained backbone pointers."""
@@ -135,14 +132,27 @@ class ModelConfig:
 class AuditConfig:
     """Strings and settings required for the mechanistic behavioral audit."""
     blank_string: str = ""
+    neutral_string: str = "No clinical history is available for this patient."
     benign_override: str = "[CLINICAL OVERRIDE: stable benign melanocytic nevus]"
     malignant_override: str = "[CLINICAL OVERRIDE: highly suspicious for invasive melanoma]"
 
 @dataclass
 class ExperimentConfig:
     """Master configuration object wrapping all sub-configs."""
-    protocol_version: str = "v3_nobiopsy_6seeds"
-    seeds: List[int] = field(default_factory=lambda: [42, 123, 456, 789, 999, 1337])
+    # v4_verified_3seeds: fully-fixed pipeline.
+    # Fixes applied vs. earlier runs:
+    #   - biopsy field removed from PAD-UFES-20 clinical text (v3+)
+    #   - cf_correct counter added (genuine Counterfactual_Accuracy)
+    #   - Neutral_Accuracy probe added (non-empty blank probe)
+    #   - 6-class counterfactual routing fixed (benign/malignant per class)
+    #   - CKA thresholds corrected (>= 0.95 = collapse)
+    #   - Robustness label uses min() not max() on Blank_Accuracy_Drop
+    # Seeds restricted to 456/789/1337 — the only seeds with verified
+    # checkpoints. Seeds 42/123/999 have no surviving checkpoints and their
+    # original JSON data (CKA ~0.92, Fused_Norm ~27.7 for Cross-Attention)
+    # cannot be re-verified against this pipeline.
+    protocol_version: str = "v4_verified_3seeds"
+    seeds: List[int] = field(default_factory=lambda: [456, 789, 1337])
 
     # Instantiate sub-configs
     paths: PathConfig = field(default_factory=PathConfig)

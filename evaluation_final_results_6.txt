@@ -1,0 +1,449 @@
+======================================================================
+LATE FUSION
+======================================================================
+
+1. Overall Performance
+----------------------------------------
+- Accuracy: 41.51 ± 0.4923%
+- AUROC (Macro One-vs-Rest): 0.7505 ± 0.0060
+- Macro F1 Score: 0.2445 ± 0.0079
+- Macro Precision: 0.3904 ± 0.0129
+- Macro Recall: 0.3287 ± 0.0080
+- Expected Calibration Error (ECE): 0.0877
+
+2. Confusion Matrix
+----------------------------------------
+- Confusion Matrix:
+  [16, 15, 0, 0, 21, 0]
+  [17, 764, 14, 0, 47, 3]
+  [1, 168, 11, 1, 8, 3]
+  [11, 654, 20, 7, 31, 7]
+  [7, 71, 0, 0, 166, 0]
+  [17, 106, 0, 2, 105, 5]
+- Class ordering used: ['MEL', 'BCC', 'SCC', 'ACK', 'NEV', 'SEK']
+
+3. Per-Class Metrics
+----------------------------------------
+MEL:
+    Precision: 0.2319
+    Recall: 0.3077
+    F1: 0.2645
+    Accuracy: 0.3077
+    n: 52
+
+BCC:
+    Precision: 0.4297
+    Recall: 0.9041
+    F1: 0.5825
+    Accuracy: 0.9041
+    n: 845
+
+SCC:
+    Precision: 0.2444
+    Recall: 0.0573
+    F1: 0.0928
+    Accuracy: 0.0573
+    n: 192
+
+ACK:
+    Precision: 0.7000
+    Recall: 0.0096
+    F1: 0.0189
+    Accuracy: 0.0096
+    n: 730
+
+NEV:
+    Precision: 0.4392
+    Recall: 0.6803
+    F1: 0.5338
+    Accuracy: 0.6803
+    n: 244
+
+SEK:
+    Precision: 0.2778
+    Recall: 0.0213
+    F1: 0.0395
+    Accuracy: 0.0213
+    n: 235
+
+4. Mechanistic Audit
+----------------------------------------
+Report:
+- Real Accuracy:              41.51 ± 0.4923%
+- Blank-Text Accuracy:        41.04 ± 0.1281%
+- Neutral-Text Accuracy:      40.82 ± 0.4004%
+- Counterfactual Accuracy:    40.85 ± 0.1823%  [real forward pass]
+- Blank Accuracy Drop:        0.4787 ± 0.5377%
+- Text Gain (real - blank):   0.4787 ± 0.5377%
+
+Lexical Counterfactual Audit
+- CFR: 12.45 ± 0.2219
+- Malignant → Benign flips: N/A
+- Benign → Malignant flips: N/A
+- Mean ΔP: 5.80 ± 0.4462
+
+Lexical Shortcut Diagnostic
+- Diagnostic CFR: 12.45 ± 0.2219
+- Diagnostic Mean ΔP: 5.80 ± 0.4462
+- Real / Blank / Neutral / CF Accuracy: 41.51% / 41.04% / 40.82 ± 0.4004% / 40.85%
+
+5. Latent Space Geometric Audit
+----------------------------------------
+Report:
+- Samples Evaluated: 2298
+- Mean Visual Feature L2 Norm: 34.78 ± 0.0000
+- Mean Fused Feature L2 Norm: 20.55 ± 0.0520
+- Linear CKA (Visual vs Fused): 0.9655 ± 0.0007
+
+Interpretation:
+- Modality collapse
+  Extremely high CKA suggests the fused representation is nearly identical to visual features, indicating minimal text contribution.
+======================================================================
+GMU BASELINE
+======================================================================
+
+1. Overall Performance
+----------------------------------------
+- Accuracy: 41.91 ± 0.4452%
+- AUROC (Macro One-vs-Rest): 0.7589 ± 0.0066
+- Macro F1 Score: 0.2725 ± 0.0047
+- Macro Precision: 0.3651 ± 0.0082
+- Macro Recall: 0.3456 ± 0.0149
+- Expected Calibration Error (ECE): 0.0910
+
+2. Confusion Matrix
+----------------------------------------
+- Confusion Matrix:
+  [19, 11, 0, 0, 22, 0]
+  [9, 725, 44, 10, 52, 5]
+  [1, 155, 24, 4, 8, 0]
+  [8, 607, 58, 21, 35, 1]
+  [12, 73, 0, 0, 159, 0]
+  [20, 98, 3, 4, 107, 3]
+- Class ordering used: ['MEL', 'BCC', 'SCC', 'ACK', 'NEV', 'SEK']
+
+3. Per-Class Metrics
+----------------------------------------
+MEL:
+    Precision: 0.2754
+    Recall: 0.3654
+    F1: 0.3140
+    Accuracy: 0.3654
+    n: 52
+
+BCC:
+    Precision: 0.4344
+    Recall: 0.8580
+    F1: 0.5768
+    Accuracy: 0.8580
+    n: 845
+
+SCC:
+    Precision: 0.1860
+    Recall: 0.1250
+    F1: 0.1495
+    Accuracy: 0.1250
+    n: 192
+
+ACK:
+    Precision: 0.5385
+    Recall: 0.0288
+    F1: 0.0546
+    Accuracy: 0.0288
+    n: 730
+
+NEV:
+    Precision: 0.4151
+    Recall: 0.6516
+    F1: 0.5072
+    Accuracy: 0.6516
+    n: 244
+
+SEK:
+    Precision: 0.3333
+    Recall: 0.0128
+    F1: 0.0246
+    Accuracy: 0.0128
+    n: 235
+
+4. Mechanistic Audit
+----------------------------------------
+Report:
+- Real Accuracy:              41.91 ± 0.4452%
+- Blank-Text Accuracy:        41.88 ± 0.4569%
+- Neutral-Text Accuracy:      41.80 ± 0.3732%
+- Counterfactual Accuracy:    41.82 ± 0.5550%  [real forward pass]
+- Blank Accuracy Drop:        0.0290 ± 0.2714%
+- Text Gain (real - blank):   0.0290 ± 0.2714%
+
+Lexical Counterfactual Audit
+- CFR: 9.69 ± 0.3022
+- Malignant → Benign flips: N/A
+- Benign → Malignant flips: N/A
+- Mean ΔP: 5.18 ± 0.5693
+
+Lexical Shortcut Diagnostic
+- Diagnostic CFR: 9.69 ± 0.3022
+- Diagnostic Mean ΔP: 5.18 ± 0.5693
+- Real / Blank / Neutral / CF Accuracy: 41.91% / 41.88% / 41.80 ± 0.3732% / 41.82%
+
+5. Latent Space Geometric Audit
+----------------------------------------
+Report:
+- Samples Evaluated: 2298
+- Mean Visual Feature L2 Norm: 34.78 ± 0.0000
+- Mean Fused Feature L2 Norm: 8.93 ± 0.2725
+- Linear CKA (Visual vs Fused): 0.8627 ± 0.0032
+
+Interpretation:
+- Moderate geometric perturbation detected
+  CKA indicates moderate divergence between visual and fused representations, suggesting some text influence but not full integration.
+======================================================================
+CROSS-ATTENTION
+======================================================================
+
+1. Overall Performance
+----------------------------------------
+- Accuracy: 41.70 ± 1.42%
+- AUROC (Macro One-vs-Rest): 0.7521 ± 0.0051
+- Macro F1 Score: 0.2871 ± 0.0331
+- Macro Precision: 0.3539 ± 0.0336
+- Macro Recall: 0.3528 ± 0.0188
+- Expected Calibration Error (ECE): 0.1019
+
+2. Confusion Matrix
+----------------------------------------
+- Confusion Matrix:
+  [10, 12, 0, 0, 30, 0]
+  [24, 718, 72, 0, 16, 15]
+  [5, 152, 30, 0, 3, 2]
+  [35, 518, 121, 3, 23, 30]
+  [18, 57, 1, 0, 168, 0]
+  [75, 77, 7, 1, 58, 17]
+- Class ordering used: ['MEL', 'BCC', 'SCC', 'ACK', 'NEV', 'SEK']
+
+3. Per-Class Metrics
+----------------------------------------
+MEL:
+    Precision: 0.0599
+    Recall: 0.1923
+    F1: 0.0913
+    Accuracy: 0.1923
+    n: 52
+
+BCC:
+    Precision: 0.4681
+    Recall: 0.8497
+    F1: 0.6036
+    Accuracy: 0.8497
+    n: 845
+
+SCC:
+    Precision: 0.1299
+    Recall: 0.1562
+    F1: 0.1418
+    Accuracy: 0.1562
+    n: 192
+
+ACK:
+    Precision: 0.7500
+    Recall: 0.0041
+    F1: 0.0082
+    Accuracy: 0.0041
+    n: 730
+
+NEV:
+    Precision: 0.5638
+    Recall: 0.6885
+    F1: 0.6199
+    Accuracy: 0.6885
+    n: 244
+
+SEK:
+    Precision: 0.2656
+    Recall: 0.0723
+    F1: 0.1137
+    Accuracy: 0.0723
+    n: 235
+
+4. Mechanistic Audit
+----------------------------------------
+Report:
+- Real Accuracy:              41.70 ± 1.42%
+- Blank-Text Accuracy:        24.72 ± 8.61%
+- Neutral-Text Accuracy:      40.63 ± 1.22%
+- Counterfactual Accuracy:    43.08 ± 0.4646%  [real forward pass]
+- Blank Accuracy Drop:        16.99 ± 7.20%
+- Text Gain (real - blank):   16.99 ± 7.20%
+
+Lexical Counterfactual Audit
+- CFR: 23.14 ± 1.33
+- Malignant → Benign flips: N/A
+- Benign → Malignant flips: N/A
+- Mean ΔP: 10.88 ± 0.6452
+
+Lexical Shortcut Diagnostic
+- Diagnostic CFR: 23.14 ± 1.33
+- Diagnostic Mean ΔP: 10.88 ± 0.6452
+- Real / Blank / Neutral / CF Accuracy: 41.70% / 24.72% / 40.63 ± 1.22% / 43.08%
+
+5. Latent Space Geometric Audit
+----------------------------------------
+Report:
+- Samples Evaluated: 2298
+- Mean Visual Feature L2 Norm: 34.78 ± 0.0000
+- Mean Fused Feature L2 Norm: 8.39 ± 0.3215
+- Linear CKA (Visual vs Fused): 0.3275 ± 0.0082
+
+Interpretation:
+- Healthy multimodal fusion
+  CKA indicates significant divergence between visual and fused representations, suggesting strong text influence and genuine multimodal integration.
+======================================================================
+CROSS-ATTENTION T→V
+======================================================================
+
+1. Overall Performance
+----------------------------------------
+- Accuracy: 43.47 ± 0.2161%
+- AUROC (Macro One-vs-Rest): 0.7948 ± 0.0057
+- Macro F1 Score: 0.3265 ± 0.0145
+- Macro Precision: 0.4866 ± 0.0058
+- Macro Recall: 0.3695 ± 0.0238
+- Expected Calibration Error (ECE): 0.1860
+
+2. Confusion Matrix
+----------------------------------------
+- Confusion Matrix:
+  [24, 17, 0, 0, 10, 1]
+  [2, 799, 33, 4, 0, 7]
+  [0, 161, 28, 0, 0, 3]
+  [3, 654, 43, 22, 1, 7]
+  [36, 100, 1, 0, 92, 15]
+  [47, 130, 5, 3, 17, 33]
+- Class ordering used: ['MEL', 'BCC', 'SCC', 'ACK', 'NEV', 'SEK']
+
+3. Per-Class Metrics
+----------------------------------------
+MEL:
+    Precision: 0.2143
+    Recall: 0.4615
+    F1: 0.2927
+    Accuracy: 0.4615
+    n: 52
+
+BCC:
+    Precision: 0.4293
+    Recall: 0.9456
+    F1: 0.5905
+    Accuracy: 0.9456
+    n: 845
+
+SCC:
+    Precision: 0.2545
+    Recall: 0.1458
+    F1: 0.1854
+    Accuracy: 0.1458
+    n: 192
+
+ACK:
+    Precision: 0.7586
+    Recall: 0.0301
+    F1: 0.0580
+    Accuracy: 0.0301
+    n: 730
+
+NEV:
+    Precision: 0.7667
+    Recall: 0.3770
+    F1: 0.5055
+    Accuracy: 0.3770
+    n: 244
+
+SEK:
+    Precision: 0.5000
+    Recall: 0.1404
+    F1: 0.2193
+    Accuracy: 0.1404
+    n: 235
+
+4. Mechanistic Audit
+----------------------------------------
+Report:
+- Real Accuracy:              43.47 ± 0.2161%
+- Blank-Text Accuracy:        43.12 ± 0.0940%
+- Neutral-Text Accuracy:      42.50 ± 0.2521%
+- Counterfactual Accuracy:    43.49 ± 0.1957%  [real forward pass]
+- Blank Accuracy Drop:        0.3481 ± 0.1777%
+- Text Gain (real - blank):   0.3481 ± 0.1777%
+
+Lexical Counterfactual Audit
+- CFR: 2.93 ± 0.5970
+- Malignant → Benign flips: N/A
+- Benign → Malignant flips: N/A
+- Mean ΔP: 1.66 ± 0.1387
+
+Lexical Shortcut Diagnostic
+- Diagnostic CFR: 2.93 ± 0.5970
+- Diagnostic Mean ΔP: 1.66 ± 0.1387
+- Real / Blank / Neutral / CF Accuracy: 43.47% / 43.12% / 42.50 ± 0.2521% / 43.49%
+
+5. Latent Space Geometric Audit
+----------------------------------------
+Report:
+- Samples Evaluated: 2298
+- Mean Visual Feature L2 Norm: 34.78 ± 0.0000
+- Mean Fused Feature L2 Norm: 11.19 ± 0.2654
+- Linear CKA (Visual vs Fused): 0.7644 ± 0.0256
+
+Interpretation:
+- Healthy multimodal fusion
+  CKA indicates significant divergence between visual and fused representations, suggesting strong text influence and genuine multimodal integration.
+
+======================================================================
+MULTI-MODEL COMPARISON (Sorted by Accuracy)
+======================================================================
+     Model     |    Accuracy   |     AUROC     |    Macro F1   |Macro Precision|  Macro Recall |      ECE      | Real Accuracy | Blank Accuracy|Counterfactual Accuracy|Blank Accuracy Drop|   Text Gain   |      CFR      | Diagnostic CFR|    Mean ΔP    |   Linear CKA  
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Cross-Attention T→V|     43.47     |     0.7948    |     0.3265    |     0.4866    |     0.3695    |     0.1860    |     43.47     |     43.12     |         43.49         |        0.35       |      0.35     |     2.9301    |     2.9301    |     1.6638    |     0.7644    
+  GMU Baseline |     41.91     |     0.7589    |     0.2725    |     0.3651    |     0.3456    |     0.0910    |     41.91     |     41.88     |         41.82         |        0.03       |      0.03     |     9.6896    |     9.6896    |     5.1825    |     0.8627    
+Cross-Attention|     41.70     |     0.7521    |     0.2871    |     0.3539    |     0.3528    |     0.1019    |     41.70     |     24.72     |         43.08         |       16.99       |     16.99     |    23.1361    |    23.1361    |    10.8826    |     0.3275    
+  Late Fusion  |     41.51     |     0.7505    |     0.2445    |     0.3904    |     0.3287    |     0.0877    |     41.51     |     41.04     |         40.85         |        0.48       |      0.48     |    12.4456    |    12.4456    |     5.7951    |     0.9655    
+
+======================================================================
+MULTI-MODEL COMPARISON (Sorted by AUROC)
+======================================================================
+     Model     |    Accuracy   |     AUROC     |    Macro F1   |Macro Precision|  Macro Recall |      ECE      | Real Accuracy | Blank Accuracy|Counterfactual Accuracy|Blank Accuracy Drop|   Text Gain   |      CFR      | Diagnostic CFR|    Mean ΔP    |   Linear CKA  
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Cross-Attention T→V|     43.47     |     0.7948    |     0.3265    |     0.4866    |     0.3695    |     0.1860    |     43.47     |     43.12     |         43.49         |        0.35       |      0.35     |     2.9301    |     2.9301    |     1.6638    |     0.7644    
+  GMU Baseline |     41.91     |     0.7589    |     0.2725    |     0.3651    |     0.3456    |     0.0910    |     41.91     |     41.88     |         41.82         |        0.03       |      0.03     |     9.6896    |     9.6896    |     5.1825    |     0.8627    
+Cross-Attention|     41.70     |     0.7521    |     0.2871    |     0.3539    |     0.3528    |     0.1019    |     41.70     |     24.72     |         43.08         |       16.99       |     16.99     |    23.1361    |    23.1361    |    10.8826    |     0.3275    
+  Late Fusion  |     41.51     |     0.7505    |     0.2445    |     0.3904    |     0.3287    |     0.0877    |     41.51     |     41.04     |         40.85         |        0.48       |      0.48     |    12.4456    |    12.4456    |     5.7951    |     0.9655    
+
+======================================================================
+MULTI-MODEL COMPARISON (Sorted by Macro F1)
+======================================================================
+     Model     |    Accuracy   |     AUROC     |    Macro F1   |Macro Precision|  Macro Recall |      ECE      | Real Accuracy | Blank Accuracy|Counterfactual Accuracy|Blank Accuracy Drop|   Text Gain   |      CFR      | Diagnostic CFR|    Mean ΔP    |   Linear CKA  
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Cross-Attention T→V|     43.47     |     0.7948    |     0.3265    |     0.4866    |     0.3695    |     0.1860    |     43.47     |     43.12     |         43.49         |        0.35       |      0.35     |     2.9301    |     2.9301    |     1.6638    |     0.7644    
+Cross-Attention|     41.70     |     0.7521    |     0.2871    |     0.3539    |     0.3528    |     0.1019    |     41.70     |     24.72     |         43.08         |       16.99       |     16.99     |    23.1361    |    23.1361    |    10.8826    |     0.3275    
+  GMU Baseline |     41.91     |     0.7589    |     0.2725    |     0.3651    |     0.3456    |     0.0910    |     41.91     |     41.88     |         41.82         |        0.03       |      0.03     |     9.6896    |     9.6896    |     5.1825    |     0.8627    
+  Late Fusion  |     41.51     |     0.7505    |     0.2445    |     0.3904    |     0.3287    |     0.0877    |     41.51     |     41.04     |         40.85         |        0.48       |      0.48     |    12.4456    |    12.4456    |     5.7951    |     0.9655    
+
+======================================================================
+BEST MODEL SUMMARY
+======================================================================
+- Best Accuracy: Cross-Attention T→V (43.47%)
+- Best AUROC: Cross-Attention T→V (0.7948)
+- Best Macro F1: Cross-Attention T→V (0.3265)
+- Best Calibration (lowest ECE): Late Fusion (0.0877)
+- Best Multimodal Fusion: GMU Baseline (CKA: 0.8627)
+- Lowest CFR: Cross-Attention T→V (2.93)
+- Lowest Mean ΔP: Cross-Attention T→V (1.66)
+- Lowest Blank Accuracy Drop: GMU Baseline (0.0290%)
+- Most Robust to Counterfactual Text: GMU Baseline (Blank Drop: 0.0290%)
+
+⚠️  MAJORITY BASELINE WARNING (BCC class: 36.77%):
+  ✅ Late Fusion: Blank accuracy (41.04%) above majority baseline
+  ✅ GMU Baseline: Blank accuracy (41.88%) above majority baseline
+  ❌ Cross-Attention: Blank-∅ accuracy (24.72%, Neutral=40.63%) BELOW majority baseline (36.77%) — empty-string tokenizer edge case suspected
+  ✅ Cross-Attention T→V: Blank accuracy (43.12%) above majority baseline

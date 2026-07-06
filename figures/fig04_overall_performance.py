@@ -46,7 +46,7 @@ def main():
     ax.set_ylim(0, 1.05)
     ax.legend(title="Architecture", frameon=True, edgecolor="#CCCCCC")
     ax.set_title(
-        "OOD Performance on PAD-UFES-20 (Mean ± Std, 6 Seeds)",
+        "OOD Performance on PAD-UFES-20 (Mean ± Std, 3 Seeds)",
         fontsize=14, fontweight="bold",
     )
     ax.grid(True, axis="y", alpha=0.3, linestyle="--")

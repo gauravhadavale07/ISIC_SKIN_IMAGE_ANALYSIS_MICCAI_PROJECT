@@ -16,22 +16,16 @@ OUTPUT_DIR = FIGURES_DIR / "output"
 # ---------------------------------------------------------------------------
 # Model / class metadata
 # ---------------------------------------------------------------------------
-MODELS = ["Late Fusion", "GMU Baseline", "Cross-Attn V→T", "Cross-Attn T→V", "Image-Only", "Text-Only"]
+MODELS = ["Late Fusion", "GMU Baseline", "Cross-Attention"]
 MODEL_SHORT = {
     "Late Fusion": "Late Fusion",
     "GMU Baseline": "GMU",
-    "Cross-Attn V→T": "CA V→T",
-    "Cross-Attn T→V": "CA T→V",
-    "Image-Only": "Img-Only",
-    "Text-Only": "Txt-Only",
+    "Cross-Attention": "Cross-Attn",
 }
 MODEL_COLORS = {
     "Late Fusion": "#4477AA",
     "GMU Baseline": "#CC6677",
-    "Cross-Attn V→T": "#228833",
-    "Cross-Attn T→V": "#66CCEE",
-    "Image-Only": "#AA3377",
-    "Text-Only": "#BBBBBB",
+    "Cross-Attention": "#228833",
 }
 CLASS_NAMES = ["MEL", "BCC", "SCC", "ACK", "NEV", "SEK"]
 CLASS_COLORS = [

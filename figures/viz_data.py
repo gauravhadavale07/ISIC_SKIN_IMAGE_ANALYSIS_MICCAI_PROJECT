@@ -10,7 +10,7 @@ import pandas as pd
 
 from viz_style import CLASS_NAMES, DATA_DIR, FIGURES_DIR, MODELS, PROJECT_ROOT
 
-PROGRESS_JSON = PROJECT_ROOT / "results" / "experiment_progress_v3.json"
+PROGRESS_JSON = PROJECT_ROOT / "results" / "experiment_progress.json"
 LOG_CANDIDATES = [
     PROJECT_ROOT / "experiment_run_full.log",
     PROJECT_ROOT / "experiment_run.log",
@@ -116,10 +116,7 @@ def run_name_to_model_seed(run_name: str) -> Tuple[str, int]:
     mapping = {
         "Late_Fusion": "Late Fusion",
         "GMU_Baseline": "GMU Baseline",
-        "Cross_Attn_VtoT": "Cross-Attn V→T",
-        "Cross_Attn_TtoV": "Cross-Attn T→V",
-        "Image_Only": "Image-Only",
-        "Text_Only": "Text-Only",
+        "Cross-Attention": "Cross-Attention",
     }
     for key, model in mapping.items():
         if run_name.startswith(key + "_seed_"):
