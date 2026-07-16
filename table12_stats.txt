@@ -1,0 +1,44 @@
+=== TABLE 1 (MILK10k) ===
+Image-Only: Acc=61.40\pm0.73 | F1=26.63\pm0.88 | AUC=0.777\pm0.003
+Text-Only: Acc=54.71\pm0.00 | F1=11.79\pm0.00 | AUC=0.670\pm0.007
+Late Fusion: Acc=68.95\pm0.62 | F1=38.68\pm1.72 | AUC=0.880\pm0.002
+GMU Baseline: Acc=69.29\pm0.25 | F1=42.13\pm0.43 | AUC=0.882\pm0.001
+Cross-Attention (V->T): Acc=70.55\pm0.22 | F1=45.24\pm0.88 | AUC=0.884\pm0.003
+Cross-Attention T->V: Acc=71.62\pm0.58 | F1=50.81\pm0.90 | AUC=0.899\pm0.002
+
+=== TABLE 2 (PAD-UFES-20) ===
+Image-Only:
+  Acc:  38.89\pm0.59
+  AUC:  0.676\pm0.012
+  F1:   18.26\pm1.63
+  CFR:  0.00\pm0.00
+  DelP: 0.00\pm0.00
+  CKA:  1.000\pm0.000
+Late Fusion:
+  Acc:  41.26\pm0.29
+  AUC:  0.751\pm0.005
+  F1:   24.33\pm1.01
+  CFR:  11.92\pm0.56
+  DelP: 6.53\pm0.80
+  CKA:  0.965\pm0.001
+GMU Baseline:
+  Acc:  42.18\pm0.41
+  AUC:  0.760\pm0.006
+  F1:   26.57\pm0.50
+  CFR:  7.95\pm1.16
+  DelP: 4.25\pm0.85
+  CKA:  0.859\pm0.002
+Cross-Attention (V->T):
+  Acc:  41.71\pm1.78
+  AUC:  0.744\pm0.009
+  F1:   26.99\pm3.46
+  CFR:  22.53\pm4.30
+  DelP: 12.02\pm1.77
+  CKA:  0.311\pm0.038
+Cross-Attention T->V:
+  Acc:  45.01\pm0.60
+  AUC:  0.797\pm0.004
+  F1:   34.28\pm1.58
+  CFR:  3.08\pm0.23
+  DelP: 1.73\pm0.15
+  CKA:  0.752\pm0.022

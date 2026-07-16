@@ -45,7 +45,55 @@ from torch.utils.data import DataLoader, Subset
 from transformers import AutoTokenizer
 from PIL import Image
 from torchvision import transforms
+<<<<<<< HEAD
+from sklearn.metrics import accuracy_score, f1_score
+
+def bootstrap_lesion_metrics(y_true, y_pred, lesion_ids, n_bootstraps=2000, seed=42):
+    rng = np.random.RandomState(seed)
+    unique_lesions = np.unique(lesion_ids)
+    n_lesions = len(unique_lesions)
+    
+    if n_lesions == 0:
+        return 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        
+    # Precompute a dictionary of lesion_id -> array of indices for speed
+    lesion_to_idx = {}
+    for idx, lid in enumerate(lesion_ids):
+        lesion_to_idx.setdefault(lid, []).append(idx)
+        
+    acc_scores = []
+    f1_scores = []
+    
+    for _ in range(n_bootstraps):
+        sampled_lesions = rng.choice(unique_lesions, size=n_lesions, replace=True)
+        sampled_indices = []
+        for lid in sampled_lesions:
+            sampled_indices.extend(lesion_to_idx[lid])
+            
+        y_t = y_true[sampled_indices]
+        y_p = y_pred[sampled_indices]
+        
+        present_classes = np.unique(y_t)
+        if len(present_classes) > 1:
+            try:
+                acc = np.mean(y_t == y_p)
+                f1 = f1_score(y_t, y_p, average='macro')
+                acc_scores.append(acc)
+                f1_scores.append(f1)
+            except ValueError:
+                pass
+                
+    if not acc_scores:
+        return 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        
+    acc_scores = np.array(acc_scores)
+    f1_scores = np.array(f1_scores)
+    
+    return (np.mean(acc_scores), np.percentile(acc_scores, 2.5), np.percentile(acc_scores, 97.5),
+            np.mean(f1_scores), np.percentile(f1_scores, 2.5), np.percentile(f1_scores, 97.5))
+=======
 from sklearn.metrics import accuracy_score
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
 from config import cfg
 from dataset import MultimodalDermatologyDataset, get_transforms
@@ -64,18 +112,44 @@ MILK_MAJORITY_CLASS = "BCC"
 MODELS = {
     "Late Fusion":              (LateFusionClassifier,        "Late_Fusion"),
     "GMU Baseline":             (GMUClassifier,               "GMU_Baseline"),
+<<<<<<< HEAD
+    "Cross-Attention (V->T)":   (CrossAttentionClassifier,    "Cross-Attention_V→T"),
+    "Cross-Attention T->V":     (CrossAttentionT2VClassifier, "Cross-Attention_T→V"),
+    "Image-Only":               (ImageOnlyClassifier,         "ImageOnly"),
+    "Text-Only":                (TextOnlyClassifier,          "TextOnly"),
+}
+SEEDS = cfg.seeds
+=======
     "Cross-Attention (V->T)":   (CrossAttentionClassifier,    "Cross-Attention"),
     "Cross-Attention T->V":     (CrossAttentionT2VClassifier, "Cross-Attention_T2V"),
     "Image-Only":               (ImageOnlyClassifier,         "ImageOnly"),
     "Text-Only":                (TextOnlyClassifier,          "TextOnly"),
 }
 SEEDS = [456, 789, 1337]
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
 # ── Build lesion-disjoint clean held-out set ───────────────────────────────────
 print("=" * 60)
 print("MILK10k LESION-DISJOINT CLEAN AUDIT")
 print("=" * 60)
 
+<<<<<<< HEAD
+print("Loading tokenizer ...")
+tokenizer = AutoTokenizer.from_pretrained(cfg.model.text_backbone)
+
+clean_val_dataset = MultimodalDermatologyDataset(
+    csv_file=cfg.paths.milk10k_csv,
+    img_dir="",
+    tokenizer=tokenizer,
+    transform=get_transforms(),
+    split="val"
+)
+val_df = clean_val_dataset.df
+
+print(f"\nLesion-disjoint split (fixed, no random seed):")
+print(f"  Val images     : {len(val_df)}")
+print(f"  Lesion overlap : 0  (guaranteed by dataset split='val')")
+=======
 CSV_PATH = "./milk10k_train.csv"
 IMG_DIR  = "./data/raw_milk10k/"
 
@@ -101,6 +175,7 @@ print(f"  Val lesions    : {n_val_lesions}  ({n_val_lesions/n_lesions*100:.1f}% 
 print(f"  Val images     : {len(val_df)}")
 print(f"  Train images   : {len(train_df)}")
 print(f"  Lesion overlap : 0  (guaranteed by construction)")
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 print()
 print(f"  Clean val class distribution:")
 for cls, cnt in val_df['diagnostic'].value_counts().items():
@@ -112,6 +187,10 @@ milk_majority_count = val_df['diagnostic'].value_counts().iloc[0]
 milk_majority_baseline = milk_majority_count / len(val_df) * 100
 print(f"\n  Majority class in clean val: {milk_majority_class} "
       f"({milk_majority_count}/{len(val_df)} = {milk_majority_baseline:.2f}%)")
+<<<<<<< HEAD
+print()
+
+=======
 
 print()
 
@@ -129,19 +208,36 @@ clean_val_dataset = MultimodalDermatologyDataset(
     tokenizer=tokenizer,
     transform=get_transforms(),
 )
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 clean_val_loader = DataLoader(
     clean_val_dataset,
     batch_size=cfg.train.batch_size,
     shuffle=False,
     num_workers=4,
+<<<<<<< HEAD
+    pin_memory=True
+)
+
+=======
     pin_memory=True,
 )
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 print(f"Clean val loader: {len(clean_val_dataset)} samples, {len(clean_val_loader)} batches\n")
 
 # ── Run audit ──────────────────────────────────────────────────────────────────
 device = cfg.train.device
 print(f"Device: {device}\n")
 
+<<<<<<< HEAD
+# Load existing results to avoid re-running expensive mechanistic probes
+EXISTING_JSON = "./milk10k_clean_audit_results.json"
+existing_data = {}
+if os.path.exists(EXISTING_JSON):
+    with open(EXISTING_JSON, "r") as f:
+        existing_data = json.load(f).get("results", {})
+
+=======
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 results = {}
 
 for arch_name, (model_cls, prefix) in MODELS.items():
@@ -151,6 +247,14 @@ for arch_name, (model_cls, prefix) in MODELS.items():
 
     arch_results = {
         "Accuracy":        [],
+<<<<<<< HEAD
+        "Acc_CI_Lower":    [],
+        "Acc_CI_Upper":    [],
+        "F1 (Macro)":      [],
+        "F1_CI_Lower":     [],
+        "F1_CI_Upper":     [],
+=======
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         "Blank_Accuracy":  [],
         "Blank_Drop":      [],
         "Neutral_Accuracy":[],
@@ -172,6 +276,39 @@ for arch_name, (model_cls, prefix) in MODELS.items():
         model.load_state_dict(sd)
         model.eval()
 
+<<<<<<< HEAD
+        # 1. Base accuracy and raw predictions
+        evaluator = Evaluator(model, device)
+        metrics   = evaluator.evaluate(clean_val_loader)
+        real_acc  = metrics["Accuracy"]
+        y_true    = metrics["y_true"]
+        y_pred    = metrics["y_pred"]
+        y_prob    = metrics["y_prob"]
+        
+        # Save raw predictions
+        os.makedirs("results", exist_ok=True)
+        pred_path = f"results/milk10k_raw_preds_{prefix}_seed_{seed}.npz"
+        np.savez(pred_path, y_true=y_true, y_pred=y_pred, y_prob=y_prob)
+        
+        # Bootstrap Lesion metrics
+        val_lesion_ids = val_df['lesion_id'].values
+        acc_m, acc_lo, acc_hi, f1_m, f1_lo, f1_hi = bootstrap_lesion_metrics(y_true, y_pred, val_lesion_ids)
+        
+        arch_results["Accuracy"].append(acc_m)
+        arch_results["Acc_CI_Lower"].append(acc_lo)
+        arch_results["Acc_CI_Upper"].append(acc_hi)
+        arch_results["F1 (Macro)"].append(f1_m)
+        arch_results["F1_CI_Lower"].append(f1_lo)
+        arch_results["F1_CI_Upper"].append(f1_hi)
+
+        # 2. Re-use Counterfactual / blank / neutral probes and CKA from old JSON
+        # Since these don't depend on lesion bootstrapping, we can just copy them over.
+        old_arch = existing_data.get(arch_name, {})
+        seed_idx = SEEDS.index(seed)
+        
+        # Fallbacks for image-only/text-only or if data is missing
+        if arch_name in ("Image-Only", "Text-Only"):
+=======
         # 1. Base accuracy
         evaluator = Evaluator(model, device)
         metrics   = evaluator.evaluate(clean_val_loader)
@@ -180,11 +317,22 @@ for arch_name, (model_cls, prefix) in MODELS.items():
 
         # 2. Counterfactual / blank / neutral probes
         if arch_name == "Image-Only":
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
             arch_results["Blank_Accuracy"].append(real_acc)
             arch_results["Blank_Drop"].append(0.0)
             arch_results["Neutral_Accuracy"].append(real_acc)
             arch_results["CFR"].append(0.0)
             arch_results["Mean_Delta_P"].append(0.0)
+<<<<<<< HEAD
+            arch_results["Linear_CKA"].append(1.0)
+        else:
+            arch_results["Blank_Accuracy"].append(old_arch.get("Blank_Accuracy", [0]*3)[seed_idx])
+            arch_results["Blank_Drop"].append(old_arch.get("Blank_Drop", [0]*3)[seed_idx])
+            arch_results["Neutral_Accuracy"].append(old_arch.get("Neutral_Accuracy", [0]*3)[seed_idx])
+            arch_results["CFR"].append(old_arch.get("CFR", [0]*3)[seed_idx])
+            arch_results["Mean_Delta_P"].append(old_arch.get("Mean_Delta_P", [0]*3)[seed_idx])
+            arch_results["Linear_CKA"].append(old_arch.get("Linear_CKA", [0]*3)[seed_idx])
+=======
         else:
             cf_aud = CounterfactualAuditor(model, tokenizer, device)
             cf_metrics = cf_aud.run_audit(clean_val_loader)
@@ -201,15 +349,19 @@ for arch_name, (model_cls, prefix) in MODELS.items():
             cka_aud = CKAAuditor(model, device)
             cka_metrics = cka_aud.run_audit(clean_val_loader)
             arch_results["Linear_CKA"].append(cka_metrics["Linear_CKA"])
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
         del model
         torch.cuda.empty_cache() if torch.cuda.is_available() else None
 
     results[arch_name] = arch_results
 
+<<<<<<< HEAD
+=======
 # ── Cleanup temp file ──────────────────────────────────────────────────────────
 if os.path.exists(TEMP_CSV):
     os.remove(TEMP_CSV)
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
 # ── Summary table ──────────────────────────────────────────────────────────────
 print()
@@ -217,14 +369,28 @@ print("=" * 70)
 print("CLEAN IN-DOMAIN (MILK10k) AUDIT RESULTS -- LESION-DISJOINT VAL SET")
 print(f"Majority class in clean val: {milk_majority_class} ({milk_majority_baseline:.2f}%)")
 print(f"{'='*70}")
+<<<<<<< HEAD
+print(f"{'Architecture':<28} | {'Acc (%)':>18} | {'F1 (%)':>18} | {'BlkAcc':>7} | {'BlkDrp':>7} | {'Neutral':>7} | {'CFR':>6} | {'CKA':>7}")
+print("-" * 115)
+=======
 print(f"{'Architecture':<28} | {'Acc':>6} | {'BlkAcc':>7} | {'BlkDrp':>7} | {'Neutral':>7} | {'CFR':>6} | {'CKA':>7}")
 print("-" * 85)
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
 for arch, metrics in results.items():
     if not metrics["Accuracy"]:
         print(f"  {arch:<26} | [NO DATA]")
         continue
     acc  = np.mean(metrics["Accuracy"]) * 100
+<<<<<<< HEAD
+    acc_lo = np.mean(metrics["Acc_CI_Lower"]) * 100
+    acc_hi = np.mean(metrics["Acc_CI_Upper"]) * 100
+    f1  = np.mean(metrics["F1 (Macro)"]) * 100
+    f1_lo = np.mean(metrics["F1_CI_Lower"]) * 100
+    f1_hi = np.mean(metrics["F1_CI_Upper"]) * 100
+    
+=======
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     blk  = np.mean(metrics["Blank_Accuracy"]) * 100
     drp  = np.mean(metrics["Blank_Drop"])
     neut = np.mean(metrics["Neutral_Accuracy"]) * 100
@@ -232,7 +398,15 @@ for arch, metrics in results.items():
     cka  = np.mean(metrics["Linear_CKA"])
     flag_blk  = " (*)" if blk  < milk_majority_baseline else ""
     flag_neut = " (*)" if neut < milk_majority_baseline else ""
+<<<<<<< HEAD
+    
+    acc_str = f"{acc:>5.2f} [{acc_lo:>5.2f}, {acc_hi:>5.2f}]"
+    f1_str  = f"{f1:>5.2f} [{f1_lo:>5.2f}, {f1_hi:>5.2f}]"
+    
+    print(f"  {arch:<26} | {acc_str} | {f1_str} | {blk:>5.2f}%{flag_blk:<3} | "
+=======
     print(f"  {arch:<26} | {acc:>5.2f}% | {blk:>5.2f}%{flag_blk:<3} | "
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
           f"{drp:>+6.2f}pp | {neut:>5.2f}%{flag_neut:<3} | {cfr:>5.2f}% | {cka:>7.4f}")
 
 print()
@@ -242,11 +416,15 @@ print("(*) = below majority baseline in clean val set")
 output = {
     "split_info": {
         "type": "lesion-disjoint",
+<<<<<<< HEAD
+        "val_images": int(len(val_df)),
+=======
         "total_images": int(len(df)),
         "total_lesions": int(n_lesions),
         "val_lesions": int(n_val_lesions),
         "val_images": int(len(val_df)),
         "train_images": int(len(train_df)),
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         "lesion_overlap": 0,
         "val_class_distribution": val_df["diagnostic"].value_counts().to_dict(),
         "majority_class_in_val": milk_majority_class,

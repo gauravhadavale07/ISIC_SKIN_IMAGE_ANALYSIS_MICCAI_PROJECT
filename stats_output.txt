@@ -1,0 +1,127 @@
+
+=================================================================
+🏆 MICCAI FINAL MULTI-SEED STATISTICAL REPORT 🏆
+=================================================================
+
+🚀 Architecture: Late Fusion
+----------------------------------------
+  Accuracy            : 0.4145 ± 0.0050
+  Precision (Macro)   : 0.4000 ± 0.0200
+  Recall (Macro)      : 0.3267 ± 0.0105
+  F1 (Macro)          : 0.2441 ± 0.0094
+  AUROC               : 0.7510 ± 0.0044
+  Real_Accuracy       : 41.45 ± 0.50
+  Blank_Accuracy      : 41.26 ± 0.36
+  Neutral_Accuracy    : 41.11 ± 0.32
+  Counterfactual_Accuracy: 41.43 ± 0.43
+  Blank_Accuracy_Drop : 0.1886 ± 0.2969
+  CFR                 : 12.24 ± 0.88
+  Mean_Delta_P        : 6.59 ± 0.74
+  Linear_CKA          : 0.9652 ± 0.0010
+  N_samples           : 2298.00 ± 0.00
+  Vis_Feat_Norm       : 34.78 ± 0.00
+  Fused_Feat_Norm     : 20.35 ± 0.31
+
+🚀 Architecture: GMU Baseline
+----------------------------------------
+  Accuracy            : 0.4225 ± 0.0040
+  Precision (Macro)   : 0.4015 ± 0.0291
+  Recall (Macro)      : 0.3275 ± 0.0047
+  F1 (Macro)          : 0.2648 ± 0.0050
+  AUROC               : 0.7604 ± 0.0054
+  Real_Accuracy       : 42.25 ± 0.40
+  Blank_Accuracy      : 41.92 ± 0.54
+  Neutral_Accuracy    : 41.48 ± 0.28
+  Counterfactual_Accuracy: 41.76 ± 0.37
+  Blank_Accuracy_Drop : 0.3264 ± 0.3906
+  CFR                 : 8.04 ± 1.08
+  Mean_Delta_P        : 4.34 ± 0.80
+  Linear_CKA          : 0.8592 ± 0.0018
+  N_samples           : 2298.00 ± 0.00
+  Vis_Feat_Norm       : 34.78 ± 0.00
+  Fused_Feat_Norm     : 8.93 ± 0.22
+
+🚀 Architecture: Cross-Attention V→T
+----------------------------------------
+  Accuracy            : 0.4142 ± 0.0162
+  Precision (Macro)   : 0.3020 ± 0.0560
+  Recall (Macro)      : 0.3617 ± 0.0193
+  F1 (Macro)          : 0.2695 ± 0.0327
+  AUROC               : 0.7456 ± 0.0084
+  Real_Accuracy       : 41.42 ± 1.62
+  Blank_Accuracy      : 24.94 ± 9.73
+  Neutral_Accuracy    : 40.59 ± 1.15
+  Counterfactual_Accuracy: 42.06 ± 0.71
+  Blank_Accuracy_Drop : 16.48 ± 8.78
+  CFR                 : 24.13 ± 4.85
+  Mean_Delta_P        : 13.43 ± 2.72
+  Linear_CKA          : 0.3123 ± 0.0342
+  N_samples           : 2298.00 ± 0.00
+  Vis_Feat_Norm       : 34.78 ± 0.00
+  Fused_Feat_Norm     : 7.87 ± 0.47
+
+🚀 Architecture: Cross-Attention T→V
+----------------------------------------
+  Accuracy            : 0.4481 ± 0.0071
+  Precision (Macro)   : 0.4621 ± 0.0132
+  Recall (Macro)      : 0.3902 ± 0.0161
+  F1 (Macro)          : 0.3395 ± 0.0162
+  AUROC               : 0.7972 ± 0.0033
+  Real_Accuracy       : 44.81 ± 0.71
+  Blank_Accuracy      : 44.47 ± 0.94
+  Neutral_Accuracy    : 43.85 ± 0.89
+  Counterfactual_Accuracy: 44.68 ± 0.74
+  Blank_Accuracy_Drop : 0.3481 ± 0.4660
+  CFR                 : 3.04 ± 0.23
+  Mean_Delta_P        : 1.80 ± 0.20
+  Linear_CKA          : 0.7541 ± 0.0212
+  N_samples           : 2298.00 ± 0.00
+  Vis_Feat_Norm       : 34.78 ± 0.00
+  Fused_Feat_Norm     : 10.95 ± 0.13
+
+🚀 Architecture: Image-Only
+----------------------------------------
+  Accuracy            : 0.3878 ± 0.0064
+  Precision (Macro)   : 0.3063 ± 0.0703
+  Recall (Macro)      : 0.2255 ± 0.0136
+  F1 (Macro)          : 0.1790 ± 0.0167
+  AUROC               : 0.6688 ± 0.0195
+  Real_Accuracy       : 38.78 ± 0.64
+  Blank_Accuracy      : 38.78 ± 0.64
+  Neutral_Accuracy    : 38.78 ± 0.64
+  Counterfactual_Accuracy: 38.78 ± 0.64
+  Blank_Accuracy_Drop : 0.0000 ± 0.0000
+  CFR                 : 0.0000 ± 0.0000
+  Mean_Delta_P        : 0.0000 ± 0.0000
+  Linear_CKA          : 1.0000 ± 0.0000
+  N_samples           : 2298.00 ± 0.00
+  Vis_Feat_Norm       : 34.78 ± 0.00
+  Fused_Feat_Norm     : 34.78 ± 0.00
+
+🚀 Architecture: Text-Only
+----------------------------------------
+  Accuracy            : 0.3677 ± 0.0000
+  Precision (Macro)   : 0.0613 ± 0.0000
+  Recall (Macro)      : 0.1667 ± 0.0000
+  F1 (Macro)          : 0.0896 ± 0.0000
+  AUROC               : 0.4143 ± 0.0575
+  Real_Accuracy       : 36.77 ± 0.00
+  Blank_Accuracy      : 36.77 ± 0.00
+  Neutral_Accuracy    : 36.77 ± 0.00
+  Counterfactual_Accuracy: 36.77 ± 0.00
+  Blank_Accuracy_Drop : 0.0000 ± 0.0000
+  CFR                 : 0.0000 ± 0.0000
+  Mean_Delta_P        : 4.99 ± 2.38
+  Linear_CKA          : 1.0000 ± 0.0000
+  N_samples           : 2298.00 ± 0.00
+  Vis_Feat_Norm       : 8.71 ± 0.14
+  Fused_Feat_Norm     : 8.71 ± 0.14
+
+⚖️ Statistical Significance (Cross-Attention vs Late Fusion)
+-----------------------------------------------------------------
+  AUROC                -> Insufficient data for t-test.
+  F1 (Macro)           -> Insufficient data for t-test.
+  Linear_CKA           -> Insufficient data for t-test.
+  CFR                  -> Insufficient data for t-test.
+  Mean_Delta_P         -> Insufficient data for t-test.
+=================================================================

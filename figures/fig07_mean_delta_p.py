@@ -29,7 +29,11 @@ def main():
     ax.set_xticklabels([MODEL_SHORT[m] for m in MODELS])
     ax.set_ylabel("Mean Probability Shift ΔP (pp)")
     ax.set_title(
+<<<<<<< HEAD
+        "Mean ΔP Under Counterfactual Override\n(95% CI, 5 Seeds)",
+=======
         "Mean ΔP Under Counterfactual Override\n(95% CI, 3 Seeds)",
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         fontsize=14, fontweight="bold",
     )
     ax.grid(True, axis="y", alpha=0.3, linestyle="--")

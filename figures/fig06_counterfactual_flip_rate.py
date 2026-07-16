@@ -26,7 +26,11 @@ def main():
     ax.set_xticklabels([MODEL_SHORT[m] for m in MODELS])
     ax.set_ylabel("Counterfactual Flip Rate (%)")
     ax.set_title(
+<<<<<<< HEAD
+        "CFR Under Semantic Counterfactual Override\n(Mean ± Std, 5 Seeds)",
+=======
         "CFR Under Semantic Counterfactual Override\n(Mean ± Std, 3 Seeds)",
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         fontsize=14, fontweight="bold",
     )
     ax.grid(True, axis="y", alpha=0.3, linestyle="--")

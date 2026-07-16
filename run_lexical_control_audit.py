@@ -36,7 +36,11 @@ MODELS = {
     "Cross-Attention (V->T)":   (CrossAttentionClassifier,    "Cross-Attention"),
     "Cross-Attention T->V":     (CrossAttentionT2VClassifier, "Cross-Attention_T2V"),
 }
+<<<<<<< HEAD
+SEEDS = cfg.seeds
+=======
 SEEDS = [456, 789, 1337]
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
 print("=" * 60)
 print("LEXICAL CONTROL AUDIT (PAD-UFES-20)")

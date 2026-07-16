@@ -39,13 +39,21 @@ def main():
         ax.imshow(bar, extent=[0, img.shape[1], img.shape[0] - 30, img.shape[0]],
                   alpha=0.55, cmap="hot", aspect="auto")
         ax.set_title(
+<<<<<<< HEAD
+            f"True: {case['true_label']} -> Pred: {case['real_pred']}",
+=======
             f"True: {case['true_label']} → Pred: {case['real_pred']}",
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
             fontsize=11, fontweight="bold",
         )
         ax.axis("off")
 
     fig.suptitle(
+<<<<<<< HEAD
+        "Cross-Attention CLS->Text Token Salience (PAD-UFES-20)",
+=======
         "Cross-Attention CLS→Text Token Salience (PAD-UFES-20)",
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         fontsize=14, fontweight="bold",
     )
     fig.tight_layout()

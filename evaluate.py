@@ -106,7 +106,14 @@ class Evaluator:
             "Recall (Macro)": rec,
             "F1 (Macro)": f1,
             "AUROC": auroc,
+<<<<<<< HEAD
+            "Confusion Matrix": cm.tolist(),  # Convert to list for easy JSON serialization later
+            "y_true": y_true,
+            "y_pred": y_pred,
+            "y_prob": y_prob
+=======
             "Confusion Matrix": cm.tolist()  # Convert to list for easy JSON serialization later
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         }
 
         return results

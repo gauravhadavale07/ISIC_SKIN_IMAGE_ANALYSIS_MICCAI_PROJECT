@@ -28,7 +28,11 @@ MODELS = {
     "Text-Only": (TextOnlyClassifier, "TextOnly")
 }
 
+<<<<<<< HEAD
+SEEDS = cfg.seeds
+=======
 SEEDS = [456, 789, 1337]
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
 def build_milk10k_val_loader(seed):
     dataset = MultimodalDermatologyDataset(

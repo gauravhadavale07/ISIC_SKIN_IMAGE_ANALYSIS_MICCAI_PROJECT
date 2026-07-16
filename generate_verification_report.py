@@ -366,7 +366,11 @@ if ca and ca['blnk_m'] < MAJORITY_BASELINE:
 t2v = summaries.get("Cross-Attention T\u2192V")
 if t2v:
     e(f"  [OK]    T->V: lowest CFR ({t2v['cfr_m']:.2f}%) and DeltaP ({t2v['dp_m']:.2f}pp) --")
+<<<<<<< HEAD
+    e(f"          showing semantic blindness to adversarial text swaps among multimodal archs.")
+=======
     e(f"          most robust to adversarial text swaps among multimodal archs.")
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
 gmu = summaries.get("GMU Baseline")
 if gmu:
@@ -717,7 +721,11 @@ e("  " + _bar())
 e("  RECOMMENDATION FOR PAPER")
 e("  " + _bar())
 e()
+<<<<<<< HEAD
+e("  Primary proposal   : Cross-Attention T->V (best OOD performance)")
+=======
 e("  Primary proposal   : Cross-Attention T->V (best OOD performance + robustness)")
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 e("  Statistical claim  : GMU vs. Text-Only on F1 + AUROC (HB-corrected, p<0.001)")
 e("  Tautology warning  : Do NOT claim CFR/CKA vs. Image-Only as grounding evidence")
 e("  Transparency note  : V->T blank-text tokenizer artefact (neutral probe = fix)")

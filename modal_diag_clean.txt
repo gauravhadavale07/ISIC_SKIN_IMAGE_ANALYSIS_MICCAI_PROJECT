@@ -1,0 +1,9 @@
+✓ Initialized. View run at 
+https://modal.com/apps/gauravh911/main/ap-XwBZ4qrbWYc0K
+pEeWmciC7
+Stopping app - uncaught exception raised locally: ExecutionError('/home/ec2-user/ISIC_SKIN_IMAGE_ANALYSIS_MICCAI_PROJECT/scratch_diagnostic.py was modified during build process.').
+╭─ Error ─────────────────────────────────────────────╮
+│ /home/ec2-user/ISIC_SKIN_IMAGE_ANALYSIS_MICCAI_PROJ │
+│ ECT/scratch_diagnostic.py was modified during build │
+│ process.                                            │
+╰─────────────────────────────────────────────────────╯

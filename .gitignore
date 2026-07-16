@@ -14,7 +14,37 @@ data/
 # Ignore IDE settings and python cache
 .cursor/
 .vscode/
+<<<<<<< HEAD
+.vscode-server/
+=======
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 .idea/
 __pycache__/
 .cache/
 .ipynb_checkpoints/
+<<<<<<< HEAD
+.lightning_studio/
+
+# Ignore papers and documents
+*.pdf
+*.docx
+*.doc
+*.zip
+*.tar.gz
+paper/
+reports/
+READING_BETWEEN_LESIONS_MASTER_DRAFT.md
+THESIS_DRAFT.md
+PROJECT_REPORT.md
+Section_*.docx
+Section_*.md
+verification_report.md
+verification_report.txt
+
+# Ignore AI coding agent files
+.devin/
+.windsurf/
+.gemini/
+.antigravity/
+=======
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20

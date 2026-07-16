@@ -1,0 +1,91 @@
+✓ Initialized. View run at 
+https://modal.com/apps/gauravh911/main/ap-V4ef2FK4h2XbW
+tKIZcwkyr
+unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-3' coro=<Synchronizer._wrap_check_async_leakage.<locals>.coro_wrapped() done, defined at /home/ec2-user/.local/lib/python3.9/site-packages/synchronicity/synchronizer.py:257> exception=UserCodeException(ClientClosed(139763470958352))>
+Traceback (most recent call last):
+  File "/usr/lib64/python3.9/contextlib.py", line 181, in __aenter__
+    return await self.gen.__anext__()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/runner.py", line 432, in _run_app
+    logger.warning("Timed out waiting for final app logs.")
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_utils/async_utils.py", line 198, in __aexit__
+    await self.stop()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_utils/async_utils.py", line 180, in stop
+    task.result()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_output.py", line 646, in get_app_logs_loop
+    await _get_logs()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_output.py", line 606, in _get_logs
+    async for log_batch in client.stub.AppGetLogs.unary_stream(request):
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_grpc_client.py", line 170, in unary_stream
+    async for response in self.client._call_stream(self.wrapped_method, request, metadata=metadata):
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/client.py", line 345, in _call_stream
+    yield await self._call_safely(stream.__anext__(), f"{grpclib_method.name}.recv")
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/client.py", line 293, in _call_safely
+    raise ClientClosed(id(self)) from None
+modal.exception.ClientClosed: 139763470958352
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/synchronicity/synchronizer.py", line 364, in wrapper_coro
+    return await inner_task
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/synchronicity/synchronizer.py", line 258, in coro_wrapped
+    value = await coro
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/synchronicity/exceptions.py", line 50, in coro_wrapped
+    raise UserCodeException(exc)
+synchronicity.exceptions.UserCodeException: 139763470958352
+unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-12' coro=<get_app_logs_loop() done, defined at /home/ec2-user/.local/lib/python3.9/site-packages/modal/_output.py:542> exception=ClientClosed(139763470958352)>
+Traceback (most recent call last):
+  File "/usr/lib64/python3.9/contextlib.py", line 181, in __aenter__
+    return await self.gen.__anext__()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/runner.py", line 432, in _run_app
+    logger.warning("Timed out waiting for final app logs.")
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_utils/async_utils.py", line 198, in __aexit__
+    await self.stop()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_utils/async_utils.py", line 180, in stop
+    task.result()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_output.py", line 646, in get_app_logs_loop
+    await _get_logs()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_output.py", line 606, in _get_logs
+    async for log_batch in client.stub.AppGetLogs.unary_stream(request):
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_grpc_client.py", line 170, in unary_stream
+    async for response in self.client._call_stream(self.wrapped_method, request, metadata=metadata):
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/client.py", line 345, in _call_stream
+    yield await self._call_safely(stream.__anext__(), f"{grpclib_method.name}.recv")
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/client.py", line 293, in _call_safely
+    raise ClientClosed(id(self)) from None
+modal.exception.ClientClosed: 139763470958352
+unhandled exception during asyncio.run() shutdown
+task: <Task finished name='Task-2' coro=<Synchronizer._run_function_sync.<locals>.wrapper_coro() done, defined at /home/ec2-user/.local/lib/python3.9/site-packages/synchronicity/synchronizer.py:360> exception=UserCodeException(ClientClosed(139763470958352))>
+Traceback (most recent call last):
+  File "/usr/lib64/python3.9/contextlib.py", line 181, in __aenter__
+    return await self.gen.__anext__()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/runner.py", line 432, in _run_app
+    logger.warning("Timed out waiting for final app logs.")
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_utils/async_utils.py", line 198, in __aexit__
+    await self.stop()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_utils/async_utils.py", line 180, in stop
+    task.result()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_output.py", line 646, in get_app_logs_loop
+    await _get_logs()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_output.py", line 606, in _get_logs
+    async for log_batch in client.stub.AppGetLogs.unary_stream(request):
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/_grpc_client.py", line 170, in unary_stream
+    async for response in self.client._call_stream(self.wrapped_method, request, metadata=metadata):
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/client.py", line 345, in _call_stream
+    yield await self._call_safely(stream.__anext__(), f"{grpclib_method.name}.recv")
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/modal/client.py", line 293, in _call_safely
+    raise ClientClosed(id(self)) from None
+modal.exception.ClientClosed: 139763470958352
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/synchronicity/synchronizer.py", line 364, in wrapper_coro
+    return await inner_task
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/synchronicity/synchronizer.py", line 258, in coro_wrapped
+    value = await coro
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/synchronicity/exceptions.py", line 50, in coro_wrapped
+    raise UserCodeException(exc)
+synchronicity.exceptions.UserCodeException: 139763470958352

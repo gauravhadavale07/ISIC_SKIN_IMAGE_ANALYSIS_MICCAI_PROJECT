@@ -147,12 +147,22 @@ class ExperimentConfig:
     #   - 6-class counterfactual routing fixed (benign/malignant per class)
     #   - CKA thresholds corrected (>= 0.95 = collapse)
     #   - Robustness label uses min() not max() on Blank_Accuracy_Drop
+<<<<<<< HEAD
+    # 10-seed rigorous evaluation: 
+    # Expanded from the original 3-seed evaluation to achieve statistical power
+    # 6 new completely random seeds added: 42189, 81542, 63012, 19485, 37204, 55891
+    protocol_version: str = "v6_10seeds"
+    seeds: List[int] = field(default_factory=lambda: [
+        456, 789, 1337, 2024, 42189
+    ])
+=======
     # Seeds restricted to 456/789/1337 — the only seeds with verified
     # checkpoints. Seeds 42/123/999 have no surviving checkpoints and their
     # original JSON data (CKA ~0.92, Fused_Norm ~27.7 for Cross-Attention)
     # cannot be re-verified against this pipeline.
     protocol_version: str = "v4_verified_3seeds"
     seeds: List[int] = field(default_factory=lambda: [456, 789, 1337])
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
     # Instantiate sub-configs
     paths: PathConfig = field(default_factory=PathConfig)

@@ -1,0 +1,42 @@
+{
+  "Late Fusion": {
+    "Accuracy": "41.26\\pm0.29",
+    "AUROC": "0.751\\pm0.005",
+    "F1 (Macro)": "24.33\\pm1.01",
+    "CFR": "1192.34\\pm55.52",
+    "Mean_Delta_P": "6.53\\pm0.80",
+    "Linear_CKA": "0.965\\pm0.001"
+  },
+  "GMU Baseline": {
+    "Accuracy": "42.18\\pm0.41",
+    "AUROC": "0.760\\pm0.006",
+    "F1 (Macro)": "26.57\\pm0.50",
+    "CFR": "794.60\\pm116.07",
+    "Mean_Delta_P": "4.25\\pm0.85",
+    "Linear_CKA": "0.859\\pm0.002"
+  },
+  "Cross-Attention V\u2192T": {
+    "Accuracy": "41.71\\pm1.78",
+    "AUROC": "0.744\\pm0.009",
+    "F1 (Macro)": "26.99\\pm3.46",
+    "CFR": "2253.26\\pm429.51",
+    "Mean_Delta_P": "12.02\\pm1.77",
+    "Linear_CKA": "0.311\\pm0.038"
+  },
+  "Cross-Attention T\u2192V": {
+    "Accuracy": "45.01\\pm0.60",
+    "AUROC": "0.797\\pm0.004",
+    "F1 (Macro)": "34.28\\pm1.58",
+    "CFR": "308.09\\pm22.93",
+    "Mean_Delta_P": "1.73\\pm0.15",
+    "Linear_CKA": "0.752\\pm0.022"
+  },
+  "Image-Only": {
+    "Accuracy": "38.89\\pm0.59",
+    "AUROC": "0.676\\pm0.012",
+    "F1 (Macro)": "18.26\\pm1.63",
+    "CFR": "0.00\\pm0.00",
+    "Mean_Delta_P": "0.00\\pm0.00",
+    "Linear_CKA": "1.000\\pm0.000"
+  }
+}

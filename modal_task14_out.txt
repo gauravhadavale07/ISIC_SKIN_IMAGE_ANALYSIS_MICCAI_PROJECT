@@ -1,0 +1,7 @@
+✓ Initialized. View run at 
+https://modal.com/apps/gauravh911/main/ap-kxBv1qxNvARaVE6gw6ZIhD
+Stopping app - uncaught exception raised locally: ExecutionError('/home/ec2-user/ISIC_SKIN_IMAGE_ANALYSIS_MICCAI_PROJECT/modal_task14_out.txt was modified during build process.').
+╭─ Error ──────────────────────────────────────────────────────────────────────╮
+│ /home/ec2-user/ISIC_SKIN_IMAGE_ANALYSIS_MICCAI_PROJECT/modal_task14_out.txt  │
+│ was modified during build process.                                           │
+╰──────────────────────────────────────────────────────────────────────────────╯

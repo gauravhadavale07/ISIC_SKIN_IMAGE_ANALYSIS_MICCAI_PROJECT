@@ -1,0 +1,75 @@
+✓ Initialized. View run at 
+https://modal.com/apps/gauravh911/main/ap-AVMs3gxxh6s0H9JZE6QSdK
+✓ Created objects.
+├── 🔨 Created mount 
+│   /home/ec2-user/ISIC_SKIN_IMAGE_ANALYSIS_MICCAI_PROJECT/scratch_diagnostic.py
+├── 🔨 Created mount /home/ec2-user/ISIC_SKIN_IMAGE_ANALYSIS_MICCAI_PROJECT
+├── 🔨 Created mount /home/ec2-user/ISIC_SKIN_IMAGE_ANALYSIS_MICCAI_PROJECT/data
+└── 🔨 Created function run_diagnostic.
+You are offline and the cache for model files in Transformers v4.22.0 has been updated while your local cache seems to be the one of a previous version. It is very likely that all your calls to any `from_pretrained()` method will fail. Remove the offline mode and enable internet connection to have your cache be updated automatically, then you can go back to offline mode.
+
+[1A0it [00:00, ?it/s]
+[1A0it [00:00, ?it/s]
+[2026-07-14T03:12:36.395101Z] Loading processor/model...
+Some kwargs in processor config are unused and will not have any effect: num_additional_image_tokens. 
+[2026-07-14T03:12:36.636274Z] Processor loaded.
+
+[1ALoading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]
+[1ALoading checkpoint shards:  25%|██▌       | 1/4 [00:11<00:35, 11.77s/it]
+[1ALoading checkpoint shards:  50%|█████     | 2/4 [00:25<00:25, 12.71s/it]
+[1ALoading checkpoint shards:  75%|███████▌  | 3/4 [00:38<00:12, 12.83s/it]
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:41<00:00,  8.98s/it]
+[1ALoading checkpoint shards: 100%|██████████| 4/4 [00:41<00:00, 10.30s/it]
+[2026-07-14T03:13:21.931478Z] Model loaded and moved to CUDA.
+[2026-07-14T03:13:21.933235Z] No chat template found on tokenizer.
+[2026-07-14T03:13:22.020379Z] ==================================================
+[2026-07-14T03:13:22.021960Z] TEST 1: OLD PROMPT (USER/ASSISTANT)
+[2026-07-14T03:13:22.022639Z] ==================================================
+Expanding inputs for image tokens in LLaVa should be done in processing. Please add `patch_size` and `vision_feature_select_strategy` to the model's processing config or set directly with `processor.patch_size = {{patch_size}}` and processor.vision_feature_select_strategy = {{vision_feature_select_strategy}}`. Using processors without these attributes in the config is deprecated and will throw an error in v4.47.
+Expanding inputs for image tokens in LLaVa should be done in processing. Please add `patch_size` and `vision_feature_select_strategy` to the model's processing config or set directly with `processor.patch_size = {{patch_size}}` and processor.vision_feature_select_strategy = {{vision_feature_select_strategy}}`. Using processors without these attributes in the config is deprecated and will throw an error in v4.47.
+[2026-07-14T03:13:23.124702Z] EOS token: '</s>' (ID: 2)
+[2026-07-14T03:13:23.125418Z] Old prompt EOS probability: 96.289062%
+[2026-07-14T03:13:23.125877Z] Top 5 tokens for old prompt:
+[2026-07-14T03:13:23.126439Z]   '</s>' (ID: 2): 96.2891%
+[2026-07-14T03:13:23.126931Z]   'ASS' (ID: 4816): 0.6241%
+[2026-07-14T03:13:23.127535Z]   'The' (ID: 415): 0.3040%
+[2026-07-14T03:13:23.128180Z]   '\n' (ID: 13): 0.2878%
+[2026-07-14T03:13:23.128654Z]   'The' (ID: 1014): 0.2058%
+[2026-07-14T03:13:23.128982Z] ==================================================
+[2026-07-14T03:13:23.129360Z] TEST 2: NEW MISTRAL PROMPT ([INST])
+[2026-07-14T03:13:23.129666Z] ==================================================
+[2026-07-14T03:13:23.187793Z] New prompt EOS probability: 0.000501%
+[2026-07-14T03:13:23.188334Z] Top 5 tokens for NEW prompt:
+[2026-07-14T03:13:23.188830Z]   'The' (ID: 415): 94.5801%
+[2026-07-14T03:13:23.189424Z]   'Based' (ID: 17158): 2.3865%
+[2026-07-14T03:13:23.189882Z]   'I' (ID: 315): 0.5451%
+[2026-07-14T03:13:23.190376Z]   'It' (ID: 661): 0.3519%
+[2026-07-14T03:13:23.190903Z]   'Without' (ID: 11528): 0.3305%
+[2026-07-14T03:13:23.191257Z] ==================================================
+[2026-07-14T03:13:23.191575Z] TEST 3: GENERATING 20 SAMPLES WITH NEW PROMPT
+[2026-07-14T03:13:23.191899Z] ==================================================
+[2026-07-14T03:13:23.531996Z] Image 1 (True: NEV): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:23.911434Z] Image 2 (True: BCC): 'The diagnosis is SCC, which stands for S' (Raw IDs: [415, 21967, 349, 318, 4020, 28725, 690, 10969, 354, 318])
+[2026-07-14T03:13:24.227666Z] Image 3 (True: ACK): 'The diagnosis for this patient is SCC, which' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 318, 4020, 28725, 690])
+[2026-07-14T03:13:24.669531Z] Image 4 (True: ACK): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:25.006176Z] Image 5 (True: BCC): 'The diagnosis is SCC, which stands for S' (Raw IDs: [415, 21967, 349, 318, 4020, 28725, 690, 10969, 354, 318])
+[2026-07-14T03:13:25.292270Z] Image 6 (True: SEK): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:25.569317Z] Image 7 (True: BCC): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:25.935791Z] Image 8 (True: BCC): 'The diagnosis for this patient is SCC, which' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 318, 4020, 28725, 690])
+[2026-07-14T03:13:26.383574Z] Image 9 (True: ACK): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:26.822429Z] Image 10 (True: ACK): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:27.236539Z] Image 11 (True: ACK): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:27.527112Z] Image 12 (True: BCC): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:27.822499Z] Image 13 (True: NEV): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:28.144973Z] Image 14 (True: BCC): 'The diagnosis is SCC, which stands for S' (Raw IDs: [415, 21967, 349, 318, 4020, 28725, 690, 10969, 354, 318])
+[2026-07-14T03:13:28.506622Z] Image 15 (True: BCC): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:28.859608Z] Image 16 (True: BCC): 'The diagnosis is SCC, which stands for S' (Raw IDs: [415, 21967, 349, 318, 4020, 28725, 690, 10969, 354, 318])
+[2026-07-14T03:13:29.384808Z] Image 17 (True: SCC): 'The diagnosis is SCC, which stands for S' (Raw IDs: [415, 21967, 349, 318, 4020, 28725, 690, 10969, 354, 318])
+[2026-07-14T03:13:29.719011Z] Image 18 (True: SEK): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:30.013069Z] Image 19 (True: BCC): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:30.347209Z] Image 20 (True: BCC): 'The diagnosis for this patient is MEL.' (Raw IDs: [415, 21967, 354, 456, 7749, 349, 351, 2980, 28723, 28705])
+[2026-07-14T03:13:31.573621Z] Saved diagnostic outputs to /root/project/results/lvlm_diagnostic_output.txt and /root/project/results/lvlm_diagnostic_output.json
+Stopping app - local entrypoint completed.
+Runner terminated.
+✓ App completed. View run at 
+https://modal.com/apps/gauravh911/main/ap-AVMs3gxxh6s0H9JZE6QSdK

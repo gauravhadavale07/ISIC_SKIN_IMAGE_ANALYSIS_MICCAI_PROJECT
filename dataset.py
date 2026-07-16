@@ -29,11 +29,19 @@ class MultimodalDermatologyDataset(Dataset):
     # reusing the one tokenizer loaded once in run_experiment.py. 
     def __init__(self, csv_file, img_dir=None, tokenizer=None,
                  tokenizer_name="emilyalsentzer/Bio_ClinicalBERT", transform=None,
+<<<<<<< HEAD
+                 max_length=128, split="all", **kwargs):
+=======
                  max_length=128, **kwargs):
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         """
         Multimodal dataset for dermoscopic images and clinical history text.
 
         Args:
+<<<<<<< HEAD
+            split: 'train', 'val', or 'all'. Used to perform strict lesion-disjoint splits.
+=======
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
             tokenizer: an already-instantiated HuggingFace tokenizer. If
                 provided, it is used directly (preferred — avoids reloading
                 the tokenizer once per dataset split, and guarantees every
@@ -41,6 +49,10 @@ class MultimodalDermatologyDataset(Dataset):
             tokenizer_name: fallback HF model string, only used if
                 `tokenizer` is not provided.
         """
+<<<<<<< HEAD
+        import re
+=======
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         print(f"📦 Loading dataset from: {csv_file}")
         self.df = pd.read_csv(csv_file)
 
@@ -49,6 +61,32 @@ class MultimodalDermatologyDataset(Dataset):
         # Filter out literal 'NAN' strings that bypassed dropna() during preprocessing
         self.df = self.df[self.df['diagnostic'].astype(str).str.upper() != 'NAN']
         self.df = self.df.reset_index(drop=True) 
+<<<<<<< HEAD
+
+        # --- LESION-DISJOINT SPLITTING LOGIC ---
+        if split in ["train", "val"]:
+            # Extract lesion ID from filepath
+            self.df['lesion_id'] = self.df['filepath'].apply(
+                lambda x: re.search(r'(IL_\d+)', str(x)).group(1) if re.search(r'(IL_\d+)', str(x)) else None
+            )
+            # Filter out any rows without a valid lesion ID
+            self.df = self.df.dropna(subset=['lesion_id'])
+            
+            # Group all lesions and determine the 85/15 boundary
+            all_lesions = sorted(self.df['lesion_id'].unique())
+            n_val_lesions = int(0.15 * len(all_lesions))
+            val_lesion_set = set(all_lesions[-n_val_lesions:])
+            
+            # Apply the split
+            if split == "val":
+                self.df = self.df[self.df['lesion_id'].isin(val_lesion_set)]
+            elif split == "train":
+                self.df = self.df[~self.df['lesion_id'].isin(val_lesion_set)]
+                
+            self.df = self.df.reset_index(drop=True)
+            print(f"   ↳ {split.upper()} SPLIT: {len(self.df)} images (lesion-disjoint)")
+=======
+>>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         # =================================================================
 
         self.tokenizer = tokenizer if tokenizer is not None else AutoTokenizer.from_pretrained(tokenizer_name)

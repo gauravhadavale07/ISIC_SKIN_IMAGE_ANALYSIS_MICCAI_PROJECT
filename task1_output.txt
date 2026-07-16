@@ -1,0 +1,7 @@
+======================================================================
+TASK 1: METADATA-SHUFFLE STATISTICAL SIGNIFICANCE (N=5 Seeds)
+======================================================================
+📦 Loading dataset from: ./pad_ufes_20_test.csv
+📦 Loading dataset from: ./pad_ufes_20_test.csv
+
+Evaluating: Late Fusion

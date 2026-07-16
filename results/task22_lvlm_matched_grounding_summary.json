@@ -1,0 +1,18 @@
+[
+  {
+    "image_condition":"real_image",
+    "aligned_accuracy":0.5,
+    "contradictory_accuracy":0.5,
+    "flip_rate":0.5,
+    "mel_first_mel_preds_rate":1.0,
+    "nev_first_nev_preds_rate":1.0
+  },
+  {
+    "image_condition":"blank_image",
+    "aligned_accuracy":0.5,
+    "contradictory_accuracy":0.5,
+    "flip_rate":0.5,
+    "mel_first_mel_preds_rate":1.0,
+    "nev_first_nev_preds_rate":1.0
+  }
+]
