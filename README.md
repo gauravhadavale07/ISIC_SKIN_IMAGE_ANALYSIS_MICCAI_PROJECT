@@ -37,4 +37,4 @@ python task14_feature_knockout.py
 
 ## Note
 
-This repository contains code only. Papers, heavy datasets, model checkpoints, and AI coding agent configurations have been omitted to keep the repository lightweight and clean.
+This repository contains code only. Papers, heavy datasets, and model checkpoints have been omitted to keep the repository lightweight and clean.
