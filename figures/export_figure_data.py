@@ -42,11 +42,7 @@ from counterfactual import CounterfactualAuditor  # noqa: E402
 from viz_data import aggregate_training_by_model, parse_training_logs  # noqa: E402
 from viz_style import CLASS_NAMES, DATA_DIR, MODELS  # noqa: E402
 
-<<<<<<< HEAD
 REPRESENTATIVE_SEED = 1337
-=======
-REPRESENTATIVE_SEED = 42
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 ARCHITECTURES = {
     "Late Fusion": LateFusionClassifier,
     "GMU Baseline": GMUClassifier,
@@ -242,11 +238,7 @@ def main():
         transform=get_eval_transforms(),
     )
     test_loader = DataLoader(
-<<<<<<< HEAD
         test_ds, batch_size=cfg.train.batch_size, shuffle=False, num_workers=0
-=======
-        test_ds, batch_size=cfg.train.batch_size, shuffle=False, num_workers=2
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     )
     test_df = test_ds.df
 

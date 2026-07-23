@@ -1,0 +1,68 @@
+[
+  {
+    "image_condition": "blank_image",
+    "true_class": "MEL",
+    "n": 52,
+    "mean_aligned_minus_contradictory_margin": 0.0018327832221984863,
+    "median_aligned_minus_contradictory_margin": 0.0018327832221984863,
+    "wilcoxon_p_vs_zero": 5.550063481222654e-13,
+    "aligned_binary_accuracy": 0.0,
+    "contradictory_binary_accuracy": 0.0,
+    "contradiction_flip_rate": 0.0
+  },
+  {
+    "image_condition": "blank_image",
+    "true_class": "NEV",
+    "n": 52,
+    "mean_aligned_minus_contradictory_margin": 0.0018327832221984863,
+    "median_aligned_minus_contradictory_margin": 0.0018327832221984863,
+    "wilcoxon_p_vs_zero": 5.550063481222654e-13,
+    "aligned_binary_accuracy": 1.0,
+    "contradictory_binary_accuracy": 1.0,
+    "contradiction_flip_rate": 0.0
+  },
+  {
+    "image_condition": "real_image",
+    "true_class": "MEL",
+    "n": 52,
+    "mean_aligned_minus_contradictory_margin": -0.007342696906282351,
+    "median_aligned_minus_contradictory_margin": -0.005569338798522949,
+    "wilcoxon_p_vs_zero": 0.007623011688225555,
+    "aligned_binary_accuracy": 0.6153846153846154,
+    "contradictory_binary_accuracy": 0.5961538461538461,
+    "contradiction_flip_rate": 0.019230769230769232
+  },
+  {
+    "image_condition": "real_image",
+    "true_class": "NEV",
+    "n": 52,
+    "mean_aligned_minus_contradictory_margin": -0.013123709600991927,
+    "median_aligned_minus_contradictory_margin": -0.010687649250030518,
+    "wilcoxon_p_vs_zero": 1.719852945321138e-05,
+    "aligned_binary_accuracy": 0.7307692307692307,
+    "contradictory_binary_accuracy": 0.7307692307692307,
+    "contradiction_flip_rate": 0.0
+  },
+  {
+    "image_condition": "blank_image",
+    "true_class": "ALL",
+    "n": 104,
+    "mean_aligned_minus_contradictory_margin": 0.0018327832221984863,
+    "median_aligned_minus_contradictory_margin": 0.0018327832221984863,
+    "wilcoxon_p_vs_zero": 2.023160542233985e-24,
+    "aligned_binary_accuracy": 0.5,
+    "contradictory_binary_accuracy": 0.5,
+    "contradiction_flip_rate": 0.0
+  },
+  {
+    "image_condition": "real_image",
+    "true_class": "ALL",
+    "n": 104,
+    "mean_aligned_minus_contradictory_margin": -0.010233203253637139,
+    "median_aligned_minus_contradictory_margin": -0.008329987525939941,
+    "wilcoxon_p_vs_zero": 6.118530311947918e-07,
+    "aligned_binary_accuracy": 0.6730769230769231,
+    "contradictory_binary_accuracy": 0.6634615384615384,
+    "contradiction_flip_rate": 0.009615384615384616
+  }
+]

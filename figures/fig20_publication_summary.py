@@ -62,11 +62,7 @@ def main():
 
     fig.suptitle(
         "Mechanistic Audit of Multimodal Grounding in Dermoscopic Foundation Models\n"
-<<<<<<< HEAD
         "(PAD-UFES-20 OOD, Mean ± Std over 5 Seeds)",
-=======
-        "(PAD-UFES-20 OOD, Mean ± Std over 3 Seeds)",
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         fontsize=15, fontweight="bold", y=1.02,
     )
     save_figure(fig, "fig20_publication_summary")

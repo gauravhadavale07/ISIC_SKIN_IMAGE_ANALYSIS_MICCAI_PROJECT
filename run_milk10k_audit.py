@@ -28,35 +28,36 @@ MODELS = {
     "Text-Only": (TextOnlyClassifier, "TextOnly")
 }
 
-<<<<<<< HEAD
 SEEDS = cfg.seeds
-=======
-SEEDS = [456, 789, 1337]
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
 def build_milk10k_val_loader(seed):
-    dataset = MultimodalDermatologyDataset(
+    train_dataset = MultimodalDermatologyDataset(
         csv_file="./milk10k_train.csv",
-        img_dir="./data/raw_milk10k/",
+        img_dir="",
         transform=get_transforms(),
-        is_ood=False
+        split="train"
+    )
+    val_dataset = MultimodalDermatologyDataset(
+        csv_file="./milk10k_train.csv",
+        img_dir="",
+        transform=get_transforms(),
+        split="val"
     )
     
-    n = len(dataset)
-    train_size = int(0.85 * n)
-    val_size = n - train_size
-    
-    gen = torch.Generator().manual_seed(seed)
-    _, val_sub = random_split(dataset, [train_size, val_size], generator=gen)
+    # Verify strict lesion-disjointness
+    train_lesions = set(train_dataset.lesion_ids)
+    val_lesions = set(val_dataset.lesion_ids)
+    assert len(train_lesions.intersection(val_lesions)) == 0, "Leakage detected!"
     
     loader = DataLoader(
-        val_sub,
+        val_dataset,
         batch_size=cfg.train.batch_size,
         shuffle=False,
         num_workers=4,
         pin_memory=True
     )
     return loader
+
 
 print("="*60)
 print("TIER 1.1: MILK10k IN-DOMAIN AUDIT")

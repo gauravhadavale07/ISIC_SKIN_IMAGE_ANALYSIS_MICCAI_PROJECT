@@ -41,11 +41,7 @@ def checkpoint_is_compatible(model, checkpoint_path, device) -> bool:
         return False
 
 
-<<<<<<< HEAD
 def main_logic():
-=======
-def main():
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     print("🚀 INITIALIZING MICCAI MULTI-SEED EXPERIMENT PIPELINE")
     print("=" * 65)
     
@@ -66,11 +62,7 @@ def main():
         tokenizer=tokenizer,
         transform=get_eval_transforms()
     )
-<<<<<<< HEAD
     test_loader = DataLoader(test_ds, batch_size=cfg.train.batch_size, shuffle=False, num_workers=0, pin_memory=True)
-=======
-    test_loader = DataLoader(test_ds, batch_size=cfg.train.batch_size, shuffle=False, num_workers=2, pin_memory=True)
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
     # Define the architectures we want to compare
     architectures = {
@@ -123,53 +115,31 @@ def main():
             csv_file=milk10k_csv_path,
             img_dir="",  # FIX: Prevent duplicate path generation
             tokenizer=tokenizer,
-<<<<<<< HEAD
             transform=get_train_transforms(),
             split="train"
-=======
-            transform=get_train_transforms()
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         )
         
         val_ds = MultimodalDermatologyDataset(
             csv_file=milk10k_csv_path,
             img_dir="",  # FIX: Prevent duplicate path generation
             tokenizer=tokenizer,
-<<<<<<< HEAD
             transform=get_eval_transforms(),
             split="val"
-=======
-            transform=get_eval_transforms()
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         )
         
         # Ensure train_ds has samples before calculating split sizes
         if len(train_ds) == 0:
              raise ValueError(f"Dataset loaded from {milk10k_csv_path} resulted in 0 samples after initialization. Please check the CSV file and dataset loading logic.")
-<<<<<<< HEAD
         
+        # Verify the lengths and strictly disjoint IDs before passing to DataLoader
+        train_lesions = set(train_ds.lesion_ids)
+        val_lesions = set(val_ds.lesion_ids)
+        assert len(train_lesions.intersection(val_lesions)) == 0, "Leakage detected!"
+        print(f"🔒 Verified 0% lesion leakage: {len(train_lesions)} train lesions, {len(val_lesions)} val lesions (0 overlap).")
+
         # DataLoader creation is now safe
         train_loader = DataLoader(train_ds, batch_size=cfg.train.batch_size, shuffle=True, num_workers=0, pin_memory=True)
         val_loader = DataLoader(val_ds, batch_size=cfg.train.batch_size, shuffle=False, num_workers=0, pin_memory=True)
-=======
-
-        train_size = int(0.85 * len(train_ds))
-        val_size = len(train_ds) - train_size
-        
-        # We use the exact same manual seed generator for both splits.
-        # This guarantees that Image #402 is placed into the validation split 
-        # in both dataset objects, preserving strict data segregation.
-        train_subset, _ = random_split(
-            train_ds, [train_size, val_size], generator=torch.Generator().manual_seed(seed)
-        )
-        _, val_subset = random_split(
-            val_ds, [train_size, val_size], generator=torch.Generator().manual_seed(seed)
-        )
-        
-        # DataLoader creation is now safe as train_subset/val_subset will have samples if train_ds did.
-        train_loader = DataLoader(train_subset, batch_size=cfg.train.batch_size, shuffle=True, num_workers=2, pin_memory=True)
-        val_loader = DataLoader(val_subset, batch_size=cfg.train.batch_size, shuffle=False, num_workers=2, pin_memory=True)
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
         # =====================================================================
         # THE ARCHITECTURE LOOP
@@ -182,7 +152,6 @@ def main():
                 print(f"\n⏭️  Skipping {model_name} (Seed {seed}) — already completed.")
                 continue
 
-<<<<<<< HEAD
             max_retries = 3
             for attempt in range(1, max_retries + 1):
                 try:
@@ -276,83 +245,6 @@ def main():
                         print("⏳ Waiting 30 seconds before retrying...")
                         import time
                         time.sleep(30)
-=======
-            print(f"\n⚙️  Initializing {model_name} (Seed {seed})...")
-            
-            model = ModelClass()
-            best_model_path = os.path.join(cfg.paths.checkpoint_dir, run_identifier, 'best_model.pth')
-            
-            # Extract only trainable parameters (Fusion layers & Classifier)
-            trainable_params = [p for p in model.parameters() if p.requires_grad]
-            
-            optimizer = torch.optim.AdamW(
-                trainable_params, 
-                lr=cfg.train.learning_rate, 
-                weight_decay=cfg.train.weight_decay
-            )
-            
-            # Calculate total training steps for the linear warmup scheduler
-            total_steps = len(train_loader) * cfg.train.epochs
-            warmup_steps = int(cfg.train.warmup_ratio * total_steps)
-            
-            scheduler = get_linear_schedule_with_warmup(
-                optimizer, 
-                num_warmup_steps=warmup_steps, 
-                num_training_steps=total_steps
-            )
-            
-            criterion = torch.nn.CrossEntropyLoss()
-            
-            # -------------------------------------------------------------
-            # PHASE 1: TRAINING
-            # -------------------------------------------------------------
-            trainer = MultimodalTrainer(
-                model=model,
-                train_loader=train_loader,
-                val_loader=val_loader,
-                optimizer=optimizer,
-                scheduler=scheduler,
-                criterion=criterion,
-                device=device,
-                run_name=run_identifier
-            )
-            
-            if checkpoint_is_compatible(model, best_model_path, device):
-                print(f"📂 Found compatible checkpoint at {best_model_path} — skipping training.")
-            else:
-                if os.path.exists(best_model_path):
-                    print("♻️  Removing stale/incompatible checkpoint before retraining.")
-                    os.remove(best_model_path)
-                trainer.fit()
-            
-            # -------------------------------------------------------------
-            # PHASE 2: OOD EVALUATION & AUDITING
-            # -------------------------------------------------------------
-            load_checkpoint(model, best_model_path, device)
-            
-            print(f"\n🩺 Commencing Zero-Shot OOD Audit on PAD-UFES-20...")
-            
-            # A. Standard Clinical Metrics
-            evaluator = Evaluator(model, device)
-            std_results = evaluator.evaluate(test_loader)
-            
-            # B. Counterfactual Semantic Audit
-            cf_auditor = CounterfactualAuditor(model, tokenizer, device)
-            cf_results = cf_auditor.run_audit(test_loader)
-            
-            # C. Latent Space Geometric Audit (CKA)
-            cka_auditor = CKAAuditor(model, device)
-            cka_results = cka_auditor.run_audit(test_loader)
-            
-            # Combine all metrics into a single dictionary
-            combined_metrics = {**std_results, **cf_results, **cka_results}
-            
-            # Save to global statistics tracker
-            stats_analyzer.add_run(model_name, combined_metrics, run_key)
-            evaluator.print_report(std_results, prefix=f"{model_name} (Seed {seed})")
-            cf_auditor.print_report(cf_results)
-            cka_auditor.print_report(cka_results, model_name=model_name)
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
         # Print intermediate results after each seed
         print(f"\n{'='*65}")
@@ -368,7 +260,6 @@ def main():
     print(f"{'='*65}")
     stats_analyzer.print_report()
 
-<<<<<<< HEAD
 import modal
 import modal.mount
 
@@ -413,7 +304,3 @@ if __name__ == "__main__":
     modal.runner.deploy_stub = lambda *args, **kwargs: None # just in case
     # Execution is handled by modal run, so we don't need to call main() directly here,
     # but having it at the bottom is standard.
-=======
-if __name__ == "__main__":
-    main()
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20

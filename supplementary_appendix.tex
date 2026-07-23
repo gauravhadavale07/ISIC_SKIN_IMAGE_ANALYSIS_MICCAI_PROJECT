@@ -1,0 +1,247 @@
+\documentclass[10pt]{article}
+\usepackage[letterpaper,margin=0.72in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{
+  pdftitle={Extended Supplementary Results and Reproducibility Details},
+  pdfauthor={},
+  pdfsubject={Supplementary reproducibility appendix},
+  pdfkeywords={}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\pagestyle{plain}
+
+\begin{document}
+
+\begin{center}
+{\Large\bfseries Extended Results and Reproducibility Details}\\
+\vspace{2pt}
+{\small Supplementary appendix for anonymous review}
+\end{center}
+
+\section*{Extended Results and Visualizations}
+
+The supplementary package includes visualizations and extended tables tied to
+analyses reported in the manuscript, including results that support the paper
+but were omitted from the main text for space. Broader project figures,
+exploratory outputs, notebooks, raw prediction caches, logs, and checkpoints
+are excluded.
+
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.32\linewidth}>{\raggedright\arraybackslash}p{0.58\linewidth}}
+\toprule
+\textbf{Folder or file group} & \textbf{Contents and purpose} \\
+\midrule
+\texttt{extended\_visualizations/} & Figure PDFs directly tied to reported experiments and claims: OOD performance, blank-text ablation, counterfactual flip rate, mean probability shift, CKA, qualitative case studies, cross-attention visualization, DDI fairness, Holm-corrected shuffle significance, biopsy examples, SAE features, causal patching, matched grounding plots, and LVLM diagnostics. \\
+\texttt{extended\_tables/} & Compact CSV/JSON outputs for reported manuscript claims: PAD-UFES OOD metrics, MILK10k lesion-disjoint audit and split-distribution check, metadata-shuffle control, DDI fairness, activation patching, SAE feature discovery, Feature 1449 knockout, DDI demographic patching, LVLM steering diagnostics, center-crop control, and matched grounding audit. \\
+\bottomrule
+\end{tabular}
+
+\section*{Implementation and Reproducibility Details}
+
+\subsection*{Datasets and Splits}
+
+MILK10k is used as the in-domain training benchmark with six classes:
+MEL, BCC, SCC, ACK, NEV, and SEK. The included \texttt{milk10k\_train.csv}
+contains 9,344 image rows corresponding to 4,672 lesion identifiers, with
+two images per lesion. The deterministic clean split groups rows by lesion
+identifier, sorts lesion IDs, and reserves the final 15\% of lesions for
+validation. This yields 700 validation lesions, 1,400 validation images,
+7,944 training images, and zero lesion overlap. This split is used as a
+leakage-control audit; repeated stratified lesion-disjoint splits would be the
+appropriate robustness extension for in-domain performance estimation.
+As an additional distribution check, we sampled 10,000 random lesion-disjoint
+validation sets of the same size. The deterministic validation-set class
+proportions were close to random expectation for every class (maximum absolute
+$z$-score $0.71$), indicating that the fixed sorted-ID split is not an obvious
+class-composition outlier. The CSV
+\path{extended_tables/task29_lesion_split_distribution_audit.csv}
+contains the per-class counts, random 95\% intervals, and tail probabilities.
+
+We also repeated the Text-Only leakage check across five random stratified
+lesion-disjoint splits using cached frozen BioClinicalBERT CLS embeddings and
+the same linear-head training protocol. Text-Only accuracy averaged 46.28\%
+(95\% CI 33.23--59.32), below the validation majority baseline of 53.92\%;
+the mean Text-Only-minus-majority difference was $-7.65$ percentage points
+($p=0.179$), providing no evidence that text-only generalization persists after
+lesion overlap is removed. The per-split CSV and summary JSON are included as
+\path{extended_tables/task30_textonly_random_lesion_cv.csv} and
+\path{result_summaries/task30_textonly_random_lesion_cv_summary.json}.
+
+PAD-UFES-20 is used for out-of-distribution evaluation through
+\texttt{pad\_ufes\_20\_test.csv}. DDI is used for Fitzpatrick skin-tone
+stratified analysis; raw DDI images are not included, but the audit code and
+compact output tables are included. Raw public datasets and trained model
+weights are intentionally excluded from the zip.
+
+\subsection*{Preprocessing}
+
+Images are resized to $224\times224$ and normalized with ImageNet statistics:
+mean $(0.485, 0.456, 0.406)$ and standard deviation
+$(0.229, 0.224, 0.225)$. Training augmentation uses random resized crop
+(scale 0.8--1.0, aspect ratio 0.9--1.1), horizontal and vertical flips
+with probability 0.5, random rotation up to 45 degrees, and color jitter
+with brightness, contrast, and saturation 0.1 and hue 0.05. Evaluation uses
+deterministic resize, tensor conversion, and normalization.
+
+Clinical text is tokenized with \texttt{Bio\_ClinicalBERT} using maximum
+length 128. Missing or literal null text is mapped to the configured blank
+string. Labels use the six-class mapping MEL=0, BCC=1, SCC=2, ACK=3,
+NEV=4, SEK=5.
+
+\subsection*{Training Hyperparameters}
+
+\begin{tabular}{ll}
+\toprule
+\textbf{Setting} & \textbf{Value} \\
+\midrule
+Optimizer & AdamW \\
+Loss & Cross-entropy \\
+Learning rate & $2\times10^{-5}$ \\
+Weight decay & 0.01 \\
+Batch size & 16 \\
+Epochs & 5 maximum \\
+Early stopping & validation loss patience of 2 epochs \\
+Warmup & linear schedule with 10\% warmup ratio \\
+Gradient clipping & maximum norm 1.0 \\
+Mixed precision & enabled on CUDA \\
+Seeds & 456, 789, 1337 for the main reported multi-seed runs \\
+\bottomrule
+\end{tabular}
+
+\subsection*{Architecture Specifications}
+
+All discriminative models use frozen ViT-Base-patch16-224 visual features
+and frozen Bio\_ClinicalBERT text features, both with 768-dimensional hidden
+states. The output space has six diagnostic classes.
+
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{0.62\linewidth}}
+\toprule
+\textbf{Model} & \textbf{Specification} \\
+\midrule
+Image-Only & Frozen ViT-B/16 encoder followed by a linear six-class classifier. \\
+Text-Only & Frozen Bio\_ClinicalBERT CLS embedding followed by a linear six-class classifier. \\
+Late Fusion & Concatenates 768-d visual and 768-d text embeddings, applies a 512-d hidden layer, ReLU, dropout 0.1, and a six-class classifier. \\
+GMU & Projects visual and text embeddings to 512-d, computes a 512-d sigmoid gate from the concatenated 1536-d input, and classifies the gated fused representation. \\
+Cross-Attention V-to-T & Uses one multi-head attention layer with 8 heads and dropout 0.1 where a visual query attends to text keys and values. \\
+Cross-Attention T-to-V & Uses one multi-head attention layer with 8 heads and dropout 0.1 where text queries attend to ViT patch-token keys and values; the attended sequence is mean-pooled before classification. \\
+Top-K SAE & Trained on the mean-pooled fused residual stream of Cross-Attention T-to-V with hidden dimension 6144 and $k=32$. \\
+\bottomrule
+\end{tabular}
+
+\section*{Mathematical Derivations}
+
+\subsection*{Lesion Leakage Under Image-Level Random Splitting}
+
+MILK10k contains two images per lesion. Under an image-level random split
+with validation probability $p_{\mathrm{val}}=0.15$, conditioning on one image
+from a lesion appearing in validation, the probability that the paired image
+appears in training is
+\[
+P(\text{paired image in train}\mid\text{one image in validation})
+=1-p_{\mathrm{val}}=0.85.
+\]
+Thus an image-level split is expected to leak approximately 85\% of validation
+lesions into training. Grouping by lesion ID before splitting removes this
+failure mode by construction:
+\[
+\mathcal{L}_{\mathrm{train}}\cap\mathcal{L}_{\mathrm{val}}=\varnothing.
+\]
+
+\subsection*{Counterfactual Flip Rate}
+
+For image $x_i$, real text $t_i$, and contradictory text $\tilde{t}_i$, let
+\[
+\hat{y}_i = \arg\max_c f_c(x_i,t_i),
+\qquad
+\tilde{y}_i = \arg\max_c f_c(x_i,\tilde{t}_i).
+\]
+The counterfactual flip rate is
+\[
+\mathrm{CFR}=\frac{1}{N}\sum_{i=1}^N
+\mathbf{1}\{\hat{y}_i\neq \tilde{y}_i\}.
+\]
+For an image-only model $f(x,t)=g(x)$, predictions do not depend on $t$.
+Therefore $\hat{y}_i=\tilde{y}_i$ for all $i$, and
+\[
+\mathrm{CFR}_{\mathrm{image-only}}=0.
+\]
+This is why CFR against an image-only baseline is a structural property rather
+than evidence of semantic grounding.
+
+\subsection*{Linear CKA Identity for Identical Feature Spaces}
+
+Linear CKA between centered feature matrices $X,Y\in\mathbb{R}^{N\times d}$ is
+\[
+\mathrm{CKA}(X,Y)=
+\frac{\|X^\top Y\|_F^2}{\|X^\top X\|_F\|Y^\top Y\|_F}.
+\]
+If the fused representation is identical to the visual representation, then
+$Y=X$ and
+\[
+\mathrm{CKA}(X,X)=
+\frac{\|X^\top X\|_F^2}{\|X^\top X\|_F\|X^\top X\|_F}=1.
+\]
+Thus CKA equal to 1.0 is guaranteed for an unchanged image-only feature space
+and must not be interpreted as a semantic text-grounding result.
+
+\subsection*{Matched Grounding Margin}
+
+For a binary class pair such as MEL/NEV, define the class margin under text
+condition $t$ as
+\[
+m_i(t)=f_{\mathrm{MEL}}(x_i,t)-f_{\mathrm{NEV}}(x_i,t).
+\]
+For each matched image, the grounding shift is
+\[
+\Delta_i=m_i(t_i^{\mathrm{aligned}})-m_i(t_i^{\mathrm{contradictory}}).
+\]
+Positive $\Delta_i$ means aligned text increases the true-pair margin relative
+to contradictory text. The reported real-image mean shift is negative for the
+representative MEL/NEV audit, indicating that aligned text did not improve the
+correct-class margin.
+
+\subsection*{SAE Feature Knockout Estimand}
+
+Let $z_i$ be the fused representation, $a_{ij}$ the activation of SAE feature
+$j$, and $d_j$ its decoder direction. A single-feature knockout constructs
+\[
+z_i^{(-j)}=z_i-a_{ij}d_j.
+\]
+The reported intervention estimand for Feature 1449 is the mean change in
+malignant-minus-benign logit contrast,
+\[
+\Delta_{\mathrm{mal-ben}}=
+\frac{1}{N}\sum_{i=1}^N
+\left[
+\left(\overline{f}_{\mathrm{mal}}(z_i^{(-1449)})
+-\overline{f}_{\mathrm{ben}}(z_i^{(-1449)})\right)
+-
+\left(\overline{f}_{\mathrm{mal}}(z_i)
+-\overline{f}_{\mathrm{ben}}(z_i)\right)
+\right].
+\]
+The random active-feature control uses the same estimator with a non-target
+active feature selected per row. Because decoded SAE-direction subtraction can
+move representations off manifold and can have non-local downstream effects,
+this estimand should be interpreted as causal-intervention evidence for a
+candidate shortcut feature, not as proof that a single isolated clinical artifact
+fully explains the classifier's behavior.
+
+\subsection*{Loss Function Note}
+
+The discriminative training objective is standard multi-class cross-entropy:
+\[
+\mathcal{L}=-\frac{1}{N}\sum_{i=1}^N \log
+\frac{\exp f_{y_i}(x_i,t_i)}{\sum_{c=1}^{6}\exp f_c(x_i,t_i)}.
+\]
+No novel loss function is introduced in the manuscript; the mathematical
+contributions are the audit definitions, controls, and derivations above.
+
+\end{document}

@@ -1,0 +1,55 @@
+import modal
+import subprocess
+
+app = modal.App("miccai-task21b-generalized-grounding")
+vol_results = modal.Volume.from_name("miccai-results", create_if_missing=True)
+
+image = modal.Image.debian_slim().pip_install(
+    "torch",
+    "torchvision",
+    "torchaudio",
+    "pandas",
+    "numpy",
+    "scipy",
+    "transformers",
+    "timm",
+    "huggingface_hub==0.23.2",
+    "accelerate",
+    "pillow",
+).workdir("/root/project").add_local_dir(
+    "/home/ec2-user/ISIC_SKIN_IMAGE_ANALYSIS_MICCAI_PROJECT",
+    remote_path="/root/project",
+    ignore=[
+        "data",
+        "results",
+        "logs",
+        "checkpoints",
+        ".git",
+        "__pycache__",
+        "modal_*_out.txt",
+        "modal_task*_stop_duplicate.txt",
+    ],
+).add_local_dir(
+    "/home/ec2-user/ISIC_SKIN_IMAGE_ANALYSIS_MICCAI_PROJECT/data/raw_pad_ufes",
+    remote_path="/root/project/data/raw_pad_ufes",
+).add_local_dir(
+    "/home/ec2-user/ISIC_SKIN_IMAGE_ANALYSIS_MICCAI_PROJECT/checkpoints/Cross-Attention_T→V_seed_456",
+    remote_path="/root/project/checkpoints/Cross-Attention_T→V_seed_456",
+)
+
+@app.function(
+    gpu="H100",
+    image=image,
+    timeout=3600,
+    volumes={"/root/project/results": vol_results},
+)
+def run_task21b():
+    print("\n==================================================")
+    print("Running task21b_generalized_grounding_audit.py on Modal H100...")
+    print("==================================================\n")
+    subprocess.run(["python3", "-u", "task21b_generalized_grounding_audit.py"], check=True)
+    vol_results.commit()
+
+@app.local_entrypoint()
+def main():
+    run_task21b.remote()

@@ -16,7 +16,6 @@ OUTPUT_DIR = FIGURES_DIR / "output"
 # ---------------------------------------------------------------------------
 # Model / class metadata
 # ---------------------------------------------------------------------------
-<<<<<<< HEAD
 MODELS = ["Late Fusion", "GMU Baseline", "Cross-Attention T→V", "Cross-Attention V→T"]
 MODEL_SHORT = {
     "Image-Only": "Img-Only",
@@ -33,18 +32,6 @@ MODEL_COLORS = {
     "GMU Baseline": "#CC6677",
     "Cross-Attention T→V": "#228833",
     "Cross-Attention V→T": "#999933",
-=======
-MODELS = ["Late Fusion", "GMU Baseline", "Cross-Attention"]
-MODEL_SHORT = {
-    "Late Fusion": "Late Fusion",
-    "GMU Baseline": "GMU",
-    "Cross-Attention": "Cross-Attn",
-}
-MODEL_COLORS = {
-    "Late Fusion": "#4477AA",
-    "GMU Baseline": "#CC6677",
-    "Cross-Attention": "#228833",
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 }
 CLASS_NAMES = ["MEL", "BCC", "SCC", "ACK", "NEV", "SEK"]
 CLASS_COLORS = [
@@ -55,19 +42,11 @@ CLASS_COLORS = [
 # Typography & export defaults
 # ---------------------------------------------------------------------------
 DPI = 300
-<<<<<<< HEAD
 FONT_SIZE = 20
 TITLE_SIZE = 22
 LABEL_SIZE = 20
 TICK_SIZE = 18
 LEGEND_SIZE = 16
-=======
-FONT_SIZE = 13
-TITLE_SIZE = 15
-LABEL_SIZE = 14
-TICK_SIZE = 12
-LEGEND_SIZE = 11
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
 
 def apply_style():

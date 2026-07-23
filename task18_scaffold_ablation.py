@@ -24,7 +24,7 @@ def run_scaffold_ablation():
     
     tokenizer = AutoTokenizer.from_pretrained(cfg.model.text_backbone)
     val_transforms = get_transforms()
-    test_ds = MultimodalDermatologyDataset('pad_ufes_20_test.csv', img_dir=None, tokenizer=tokenizer, transforms=val_transforms, max_text_len=cfg.data.max_text_len)
+    test_ds = MultimodalDermatologyDataset('pad_ufes_20_test.csv', img_dir=None, tokenizer=tokenizer, transform=val_transforms, max_length=cfg.data.max_text_len)
     test_loader = DataLoader(test_ds, batch_size=32, shuffle=False)
     
     correct_baseline = 0

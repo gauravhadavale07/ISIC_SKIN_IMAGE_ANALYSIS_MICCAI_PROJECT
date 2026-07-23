@@ -1,5 +1,4 @@
 """Multimodal dermatology model architectures."""
-<<<<<<< HEAD
 
 from .image_only import ImageOnlyClassifier
 from .text_only import TextOnlyClassifier
@@ -16,5 +15,3 @@ __all__ = [
     'CrossAttentionClassifier',
     'MoEFusionClassifier'
 ]
-=======
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20

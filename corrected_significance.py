@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config import cfg
-=======
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 """
 corrected_significance.py — Holm-Bonferroni corrected significance tests
                            with paired Cohen's d effect sizes.
@@ -48,11 +45,7 @@ with open("./results/experiment_progress.json") as f:
 results_db = data["results"]
 
 ALPHA = 0.05
-<<<<<<< HEAD
 SEEDS = cfg.seeds   # order in which results were appended
-=======
-SEEDS = [456, 789, 1337]   # order in which results were appended
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
 print(f"\n{'='*72}")
 print("CORRECTED SIGNIFICANCE ANALYSIS")
@@ -60,7 +53,6 @@ print(f"Holm-Bonferroni correction, α={ALPHA}")
 print(f"{'='*72}")
 
 # ── helpers ────────────────────────────────────────────────────────────────────
-<<<<<<< HEAD
 def get_vals(arch, metric):
     """Return exactly len(SEEDS) values or None."""
     vals = results_db.get(arch, {}).get(metric, [])
@@ -85,22 +77,6 @@ def hedges_g_paired(a, b):
         J = 1.0
         
     return d * J
-=======
-def get3(arch, metric):
-    """Return exactly-3 values or None."""
-    vals = results_db.get(arch, {}).get(metric, [])
-    if len(vals) != 3:
-        return None
-    return list(vals)
-
-def cohens_d_paired(a, b):
-    """Paired Cohen's d = mean(diffs) / std(diffs, ddof=1)."""
-    diffs = np.array(b) - np.array(a)
-    sd = np.std(diffs, ddof=1)   # sample std of differences
-    if sd == 0:
-        return float('inf') if diffs.mean() != 0 else 0.0
-    return float(diffs.mean() / sd)
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
 def d_label(d):
     """Cohen's d magnitude label."""
@@ -111,7 +87,6 @@ def d_label(d):
     return "large"
 
 def raw_ttest(arch_a, arch_b, metric):
-<<<<<<< HEAD
     """Paired t-test + Hedges' g. Returns (t, p, delta, g) or None."""
     a = get_vals(arch_a, metric)
     b = get_vals(arch_b, metric)
@@ -120,16 +95,6 @@ def raw_ttest(arch_a, arch_b, metric):
     t, p = stats.ttest_rel(a, b)
     g = hedges_g_paired(a, b)
     return float(t), float(p), float(np.mean(b) - np.mean(a)), g
-=======
-    """Paired t-test + Cohen's d. Returns (t, p, delta, d) or None."""
-    a = get3(arch_a, metric)
-    b = get3(arch_b, metric)
-    if a is None or b is None:
-        return None
-    t, p = stats.ttest_rel(a, b)
-    d = cohens_d_paired(a, b)
-    return float(t), float(p), float(np.mean(b) - np.mean(a)), d
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
 
 def holm_bonferroni(tests):
     """
@@ -282,13 +247,8 @@ for row in corrected_rows:
         continue
     if row["metric"] not in SPOTLIGHT_METRICS:
         continue
-<<<<<<< HEAD
     a_vals = get_vals(row["arch_a"], row["metric"]) or []
     b_vals = get_vals(row["arch_b"], row["metric"]) or []
-=======
-    a_vals = get3(row["arch_a"], row["metric"]) or []
-    b_vals = get3(row["arch_b"], row["metric"]) or []
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     dl = d_label(row["d"])
     a_str = str([round(v, 4) for v in a_vals])
     b_str = str([round(v, 4) for v in b_vals])
@@ -311,11 +271,7 @@ for row in sorted(corrected_rows, key=lambda r: r["p"]):
 n_reject = sum(1 for r in corrected_rows if r["reject"])
 print(f"\n  Survivors after Holm-Bonferroni: {n_reject} / {m_total}")
 if n_reject == 0:
-<<<<<<< HEAD
     print("  ⚠️  No comparisons survive correction at n=10 seeds.")
-=======
-    print("  ⚠️  No comparisons survive correction at n=3 seeds.")
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     print("  This is an honest, reportable finding: power is insufficient to")
     print("  make corrected claims at this scale. A minimum-seeds power analysis")
     print("  should be included in the paper to quantify the required n.")
@@ -353,7 +309,6 @@ for comp_name in ["T→V            vs. Image-Only",
         print(f"    ✅ Survives Holm-Bonferroni on: {sig_metrics}")
         for r in rows:
             if r["reject"]:
-<<<<<<< HEAD
                 d_str = f"{r['d']:+.2f}" if r['d'] != float('inf') else "+INF"
                 sig_str = "YES*"
                 print(f"       {r['metric']:<12} | {r['p']:>8.4f} | {r['adj_alpha']:>8.4f} | {sig_str:>4} | {d_str:>8} ({d_label(r['d'])})")
@@ -361,16 +316,6 @@ for comp_name in ["T→V            vs. Image-Only",
         print(f"    ⚠️  NOT significant after Holm-Bonferroni (n={len(SEEDS)} seeds, m={m_total} tests).")
         best_p = min(rows, key=lambda r: r["p"])
         best_d = max(rows, key=lambda r: abs(r["d"]))
-=======
-                direction = "better" if r["delta"] > 0 else "worse"
-                print(f"       {r['metric']}: Δ={r['delta']:+.4f} ({direction}), d={r['d']:+.3f} [{d_label(r['d'])}], "
-                      f"t={r['t']:+.3f}, p={r['p']:.4f} (adj_α={r['adj_alpha']:.4f})")
-    else:
-        print(f"    ⚠️  NOT significant after Holm-Bonferroni (n=3 seeds, m={m_total} tests).")
-        best_p = min(rows, key=lambda r: r["p"])
-        best_d = max(rows, key=lambda r: abs(r["d"]))
-        print(f"    Best raw p={best_p['p']:.4f} on {best_p['metric']} (d={best_p['d']:+.3f} [{d_label(best_p['d'])}])")
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         print(f"    Largest |d|={best_d['d']:+.3f} [{d_label(best_d['d'])}] on {best_d['metric']} — "
               f"{'underpowered large effect' if abs(best_d['d']) >= 0.8 else 'effect too small to claim practical significance at n=3'}")
 

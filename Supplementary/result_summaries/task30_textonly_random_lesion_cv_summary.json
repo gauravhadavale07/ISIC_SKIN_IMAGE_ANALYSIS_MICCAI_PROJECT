@@ -1,0 +1,102 @@
+{
+  "summary": {
+    "n_splits": 5,
+    "split_seeds": [
+      101,
+      202,
+      303,
+      404,
+      505
+    ],
+    "textonly_accuracy_mean_ci": [
+      46.276747503566334,
+      33.232985378682834,
+      59.320509628449834
+    ],
+    "majority_accuracy_mean_ci": [
+      53.92296718972896,
+      53.92296718972895,
+      53.922967189728965
+    ],
+    "textonly_minus_majority_pp_mean_ci": [
+      -7.646219686162621,
+      -20.68998181104612,
+      5.397542438720877
+    ],
+    "textonly_minus_majority_t": -1.6275449534926922,
+    "textonly_minus_majority_p": 0.1789510618310752,
+    "interpretation": "Repeated random stratified lesion-disjoint splits test whether the MILK10k Text-Only baseline exceeds validation-set majority prediction after lesion leakage is removed."
+  },
+  "rows": [
+    {
+      "split_seed": 101,
+      "n_train_lesions": 3971,
+      "n_val_lesions": 701,
+      "n_train_images": 7942,
+      "n_val_images": 1402,
+      "val_majority_class": "BCC",
+      "val_majority_accuracy": 53.92296718972895,
+      "textonly_accuracy": 53.92296718972895,
+      "macro_f1": 11.677479147358666,
+      "weighted_f1": 37.781059495305925,
+      "best_epoch": 5,
+      "best_val_loss": 1.6452393933131588
+    },
+    {
+      "split_seed": 202,
+      "n_train_lesions": 3971,
+      "n_val_lesions": 701,
+      "n_train_images": 7942,
+      "n_val_images": 1402,
+      "val_majority_class": "BCC",
+      "val_majority_accuracy": 53.92296718972895,
+      "textonly_accuracy": 53.92296718972895,
+      "macro_f1": 11.677479147358666,
+      "weighted_f1": 37.781059495305925,
+      "best_epoch": 5,
+      "best_val_loss": 1.5873104199533286
+    },
+    {
+      "split_seed": 303,
+      "n_train_lesions": 3971,
+      "n_val_lesions": 701,
+      "n_train_images": 7942,
+      "n_val_images": 1402,
+      "val_majority_class": "BCC",
+      "val_majority_accuracy": 53.92296718972895,
+      "textonly_accuracy": 33.59486447931526,
+      "macro_f1": 11.375215595241427,
+      "weighted_f1": 30.574786008931078,
+      "best_epoch": 5,
+      "best_val_loss": 1.6776798961846193
+    },
+    {
+      "split_seed": 404,
+      "n_train_lesions": 3971,
+      "n_val_lesions": 701,
+      "n_train_images": 7942,
+      "n_val_images": 1402,
+      "val_majority_class": "BCC",
+      "val_majority_accuracy": 53.92296718972895,
+      "textonly_accuracy": 53.92296718972895,
+      "macro_f1": 11.677479147358666,
+      "weighted_f1": 37.781059495305925,
+      "best_epoch": 5,
+      "best_val_loss": 1.6332319934085842
+    },
+    {
+      "split_seed": 505,
+      "n_train_lesions": 3971,
+      "n_val_lesions": 701,
+      "n_train_images": 7942,
+      "n_val_images": 1402,
+      "val_majority_class": "BCC",
+      "val_majority_accuracy": 53.92296718972895,
+      "textonly_accuracy": 36.01997146932953,
+      "macro_f1": 12.333940600505848,
+      "weighted_f1": 32.37160474893878,
+      "best_epoch": 5,
+      "best_val_loss": 1.6569346772791145
+    }
+  ]
+}

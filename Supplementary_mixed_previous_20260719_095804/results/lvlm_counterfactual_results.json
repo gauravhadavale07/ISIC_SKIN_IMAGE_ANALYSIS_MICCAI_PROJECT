@@ -1,0 +1,730 @@
+[
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_680_1289_182.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_995_1867_5.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_966_1825_584.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL.",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_966_1825_546.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_495_941_26.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_614_1166_885.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_340_714_68.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_115_1138_870.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL.",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_895_1699_872.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_233_354_935.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_109_868_723.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL.",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_801_1518_78.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL.",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_995_1867_165.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_746_1407_708.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_975_1834_152.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_433_852_20.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_109_868_113.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL.",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_884_1683_538.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_340_714_314.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_717_1347_899.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_719_1361_234.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_902_1718_852.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_486_929_274.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_936_1772_886.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_270_417_257.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_801_1518_574.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_622_1185_922.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_656_1246_483.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_680_1289_585.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_320_681_724.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_611_1158_156.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_262_402_14.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_70_107_591.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_262_402_265.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_270_417_728.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_333_702_840.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_656_1246_489.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_972_1843_756.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_949_1802_582.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_691_1312_389.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_719_1361_160.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_233_354_828.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_710_1330_243.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL.",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_894_1679_640.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_890_1693_904.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_890_1693_454.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL.",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_70_107_155.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_115_1138_970.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_486_929_317.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_320_681_410.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL.",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_1/imgs_part_1/PAT_45_66_822.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL.",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    },
+    {
+        "filepath": "./data/raw_pad_ufes/imgs_part_2/imgs_part_2/PAT_754_1429_380.png",
+        "true_diagnostic": "MEL",
+        "predictions": {
+            "Neutral": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            },
+            "Counterfactual": {
+                "raw_text": "The diagnosis is MEL, which stands for Mel",
+                "parsed_pred": "MEL"
+            }
+        }
+    }
+]

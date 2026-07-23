@@ -52,13 +52,8 @@ def print_model_report(model_name: str):
     prec_mean, prec_std = compute_mean_std(metrics['Precision (Macro)'])
     rec_mean, rec_std = compute_mean_std(metrics['Recall (Macro)'])
     
-<<<<<<< HEAD
     cal_key = model_name.replace('Cross-Attention V->T', 'Cross-Attention (V->T)').replace('Cross-Attention V→T', 'Cross-Attention (V->T)').replace('Cross-Attention T→V', 'Cross-Attention T->V')
     ece = calibration_data.get(cal_key, {}).get('ece', 0.0)
-=======
-    # ECE from calibration data
-    ece = calibration_data[model_name]['ece']
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     
     print(f"- Accuracy: {format_metric(acc_mean * 100)} ± {format_metric(acc_std * 100)}%")
     print(f"- AUROC (Macro One-vs-Rest): {format_metric(auroc_mean)} ± {format_metric(auroc_std)}")
@@ -70,11 +65,7 @@ def print_model_report(model_name: str):
     # 2. Confusion Matrix
     print("\n2. Confusion Matrix")
     print("-" * 40)
-<<<<<<< HEAD
     cm = confusion_data.get(cal_key, {})
-=======
-    cm = confusion_data[model_name]
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     print("- Confusion Matrix:")
     for row in cm:
         print(f"  {row}")
@@ -84,11 +75,7 @@ def print_model_report(model_name: str):
     print("\n3. Per-Class Metrics")
     print("-" * 40)
     
-<<<<<<< HEAD
     pc_metrics = per_class_data.get(cal_key, {})
-=======
-    pc_metrics = per_class_data[model_name]
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     
     for i, class_name in enumerate(CLASS_NAMES):
         print(f"{class_name}:")
@@ -319,13 +306,8 @@ def print_best_model_summary():
     lowest_delta_p = min(model_data.items(), key=lambda x: x[1]['Mean ΔP'])
     lowest_blank_drop = min(model_data.items(), key=lambda x: x[1]['Blank Drop'])
     
-<<<<<<< HEAD
     # Most blind to counterfactual text: lowest blank accuracy drop (more blind)
     most_blind = min(model_data.items(), key=lambda x: x[1]['Blank Drop'])
-=======
-    # Most robust to counterfactual text: lowest blank accuracy drop (more robust)
-    most_robust = min(model_data.items(), key=lambda x: x[1]['Blank Drop'])
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     
     # Calculate majority class baseline for warning
     # BCC class has 845 samples out of 2298 total
@@ -339,11 +321,7 @@ def print_best_model_summary():
     print(f"- Lowest CFR: {lowest_cfr[0]} ({format_metric(lowest_cfr[1]['CFR'])})")
     print(f"- Lowest Mean ΔP: {lowest_delta_p[0]} ({format_metric(lowest_delta_p[1]['Mean ΔP'])})")
     print(f"- Lowest Blank Accuracy Drop: {lowest_blank_drop[0]} ({format_metric(lowest_blank_drop[1]['Blank Drop'])}%)")
-<<<<<<< HEAD
     print(f"- Most Semantically Blind to Counterfactual Text: {most_blind[0]} (Blank Drop: {format_metric(most_blind[1]['Blank Drop'])}%)")
-=======
-    print(f"- Most Robust to Counterfactual Text: {most_robust[0]} (Blank Drop: {format_metric(most_robust[1]['Blank Drop'])}%)")
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     
     # Warning for models with blank accuracy below majority baseline
     print(f"\n⚠️  MAJORITY BASELINE WARNING (BCC class: {majority_baseline:.2f}%):")

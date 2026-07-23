@@ -31,11 +31,7 @@ def draw_late_fusion(ax):
     block(ax, 0.42, 0.55, 0.18, 0.24, "CLS\n768-d", "#FFF2CC")
     block(ax, 0.42, 0.30, 0.18, 0.18, "Pooler\n768-d", "#FFF2CC")
     block(ax, 0.68, 0.42, 0.26, 0.22, "Concat\n1536-d", "#F8CECC")
-<<<<<<< HEAD
     block(ax, 0.68, 0.12, 0.26, 0.22, "MLP\n512 -> 6 classes", "#E1D5E7")
-=======
-    block(ax, 0.68, 0.12, 0.26, 0.22, "MLP\n512 → 6 classes", "#E1D5E7")
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     arrow(ax, 0.33, 0.79, 0.42, 0.67)
     arrow(ax, 0.33, 0.55, 0.42, 0.39)
     arrow(ax, 0.60, 0.67, 0.68, 0.53)
@@ -66,11 +62,7 @@ def draw_cross_attn(ax):
     block(ax, 0.05, 0.48, 0.28, 0.14, "Text\nToken seq 128×768", "#D5E8D4")
     block(ax, 0.42, 0.50, 0.28, 0.28, "Multi-Head\nCross-Attention\nQ=visual, K/V=text", "#F8CECC")
     block(ax, 0.76, 0.55, 0.20, 0.18, "Residual +\nLayerNorm", "#FFF2CC")
-<<<<<<< HEAD
     block(ax, 0.76, 0.22, 0.20, 0.22, "Multimodal\nCLS -> 6 classes", "#E1D5E7")
-=======
-    block(ax, 0.76, 0.22, 0.20, 0.22, "Multimodal\nCLS → 6 classes", "#E1D5E7")
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     arrow(ax, 0.33, 0.79, 0.42, 0.64)
     arrow(ax, 0.33, 0.55, 0.42, 0.58)
     arrow(ax, 0.70, 0.64, 0.76, 0.64)

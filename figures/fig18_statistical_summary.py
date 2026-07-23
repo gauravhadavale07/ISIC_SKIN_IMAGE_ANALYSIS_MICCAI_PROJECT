@@ -51,11 +51,7 @@ def main():
         ax.invert_yaxis()
 
     fig.suptitle(
-<<<<<<< HEAD
         "Statistical Summary Forest Plot (95% CI, 5 Seeds)",
-=======
-        "Statistical Summary Forest Plot (95% CI, 3 Seeds)",
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
         fontsize=14, fontweight="bold",
     )
     fig.tight_layout()

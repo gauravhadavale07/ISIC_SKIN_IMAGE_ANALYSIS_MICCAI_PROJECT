@@ -125,11 +125,7 @@ def run_name_to_model_seed(run_name: str) -> Tuple[str, int]:
     raise ValueError(f"Unknown run name: {run_name}")
 
 
-<<<<<<< HEAD
 def aggregate_training_by_model(runs: dict, seed: int = 1337) -> Dict[str, List[dict]]:
-=======
-def aggregate_training_by_model(runs: dict, seed: int = 42) -> Dict[str, List[dict]]:
->>>>>>> 0555f8e631286ee37d47a1d638ba93ce7e343a20
     """Get training curves for each model at a given seed."""
     out: Dict[str, List[dict]] = {}
     for run_name, epochs in runs.items():

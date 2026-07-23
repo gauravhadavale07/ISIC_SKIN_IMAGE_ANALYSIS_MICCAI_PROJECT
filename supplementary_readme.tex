@@ -1,0 +1,69 @@
+\documentclass[10pt]{article}
+\usepackage[letterpaper,margin=0.55in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{
+  pdftitle={Supplementary Material Overview},
+  pdfauthor={},
+  pdfsubject={Supplementary material overview},
+  pdfkeywords={}
+}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\renewcommand{\arraystretch}{1.12}
+
+\definecolor{headergray}{HTML}{F2F4F7}
+\definecolor{textgray}{HTML}{333333}
+
+\begin{document}
+\color{textgray}
+
+{\LARGE\bfseries Supplementary Material Overview}
+
+\vspace{4pt}
+This supplementary material accompanies the manuscript and provides the reproducibility resources for the reported multimodal dermatology experiments, mechanistic audits, LVLM probes, and subgroup fairness analyses.
+
+\vspace{6pt}
+{\bfseries File and Folder Inventory}
+
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.28\linewidth}>{\raggedright\arraybackslash}p{0.66\linewidth}}
+\toprule
+\rowcolor{headergray}\textbf{Included item} & \textbf{Description} \\
+\midrule
+README.pdf & One-page overview for the supplementary package root. \\
+supplementary\_appendix.pdf & Implementation details, architecture specifications, data pipeline details, compact extended results, and mathematical derivations for the reported audit quantities. \\
+requirements.txt & Python dependencies inspected from the experiment and audit imports. \\
+anonymized\_code/ & Blinded Python code used to reproduce the reported experiments: shared configuration/data/training/evaluation utilities, experiment runners, audit scripts, LVLM probes, and statistical checks. \\
+anonymized\_code/models/ & Implementations of the Image-Only, Text-Only, Late Fusion, GMU, and Cross-Attention classifiers evaluated in the manuscript. \\
+anonymized\_code/requirements.txt & Duplicate copy of the dependency file for reviewers who start from the code folder. \\
+data\_splits/ & CSV split and tabular feature files used by the reported MILK10k training, PAD-UFES-20 OOD evaluation, and tabular baseline. \\
+extended\_visualizations/ & Figure PDFs directly tied to reported experiments and paper claims, including ablations, CKA, fairness, qualitative cases, SAE/causal patching, matched grounding, and LVLM diagnostics. \\
+extended\_tables/ & Full compact CSV audit tables for reported mechanistic analyses where useful; unrelated and older task outputs are excluded. \\
+result\_summaries/ & Compact CSV/JSON summaries corresponding to the manuscript tables and audit claims. Raw predictions, logs, caches, and checkpoints are excluded. \\
+\bottomrule
+\end{tabular}
+
+\vspace{7pt}
+\normalsize
+{\bfseries Reproducibility Statement}
+
+The supplementary material corresponds exactly to the experiments reported in the manuscript. Included code, configuration files, split CSVs, and compact result summaries are limited to the reported baselines, ablations, mechanistic audits, LVLM probes, tabular baseline, and fairness analyses.
+
+\vspace{4pt}
+{\bfseries Data Availability Note}
+
+Raw images for MILK10k and PAD-UFES-20 are not included in this package due to dataset licensing restrictions. They must be downloaded separately from their respective original sources. The \texttt{data\_splits/} CSVs provide the exact file paths and split assignments used in all reported experiments.
+
+\vspace{4pt}
+{\bfseries Anonymisation Statement}
+
+All materials in this supplementary package have been anonymized for double-blind review. Author names, affiliations, repository links, local machine paths, logs, checkpoints, cached files, and unrelated exploratory materials are not included.
+
+\end{document}
